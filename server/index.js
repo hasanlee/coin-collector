@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/userRoutes");
 const { auth } = require("./middlewares/auth");
 const { pageNotFoundHandler } = require("./middlewares/pageNotFoundHandler");
 const { errorHandler } = require("./middlewares/globalErrorHandler");
@@ -12,6 +13,7 @@ app.use(express.json());
 
 //Routes
 app.use("/", userRoutes);
+app.use("/auth", authRoutes);
 app.use("/admin", auth, adminRoutes);
 
 //Middlewares
