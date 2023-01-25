@@ -20,6 +20,10 @@ userRoutes.get("/coins", function (req, res, next) {
   getAllCoins(req, res, next);
 });
 
+userRoutes.get("/allcoins", function (req, res, next) {
+  getAllCoinsView(req, res, next);
+});
+
 userRoutes.get("/compositions", function (req, res, next) {
   getAllCompositions(req, res, next);
 });

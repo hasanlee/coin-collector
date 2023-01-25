@@ -21,7 +21,7 @@ const getAllCoinsView = trycatch(async (req, res, next) => {
   await (
     await connection
   )
-    .query("SELECT * FROM coins;")
+    .query("SELECT * FROM AllCoinsDetailed;")
     .then(([rows]) => {
       return res.status(200).json(rows);
     })
