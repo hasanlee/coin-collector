@@ -1,8 +1,9 @@
-const { connection } = require("./db");
+const { connection } = require("../../db");
 const { trycatch } = require("../../utils/trycatch");
+const { fileUpload } = require("../../utils/fileUpload");
 
 //const funcTemplate = trycatch(async (req, res, next) => {});
-
+//TODO: Geri gonderilen melumatlar ucun base class hazirla
 //#region Get Data from DB
 const getAllCoins = trycatch(async (req, res, next) => {
   await (
@@ -34,7 +35,9 @@ const getCoinById = trycatch(async (req, res, next) => {
   )
     .query("SELECT * FROM coins WHERE id = ?;", [req.params.id])
     .then(([rows]) => {
-      return res.status(200).json(rows);
+      if (rows.length > 1)
+        return res.status(200).json({ data: rows, count: rows.length });
+      return res.status(404).json({ error: true, message: "Coin not found." });
     })
     .catch((err) => {
       throw new Error(err);
@@ -103,10 +106,17 @@ const getAllTypes = trycatch(async (req, res, next) => {
 //#endregion
 //#region Insert data to DB
 const addNewCoin = trycatch(async (req, res, next) => {
+  let frontImg = fileUpload(req.files.file1);
+  let backImg = fileUpload(req.files.file2);
+  const data = {
+    ...req.body,
+    imageUrl_front: frontImg,
+    imageUrl_back: backImg,
+  };
   await (
     await connection
   )
-    .query("INSERT INTO coins SET ?", [req.body])
+    .query("INSERT INTO coins SET ?", [data])
     .then(([data]) => {
       return res.status(200).json(data.insertId);
     })
@@ -165,10 +175,17 @@ const addNewType = trycatch(async (req, res, next) => {
 //#endregion
 //#region Update
 const updateCoin = trycatch(async (req, res, next) => {
+  let frontImg = fileUpload(req.files.file1);
+  let backImg = fileUpload(req.files.file2);
+  const data = {
+    ...req.body,
+    imageUrl_front: frontImg,
+    imageUrl_back: backImg,
+  };
   await (
     await connection
   )
-    .query("UPDATE coins SET ? WHERE id=? ", [req.body, req.params.id])
+    .query("UPDATE coins SET ? WHERE id=? ", [data, req.params.id])
     .then(([data]) => {
       res.status(200).json(data);
     })

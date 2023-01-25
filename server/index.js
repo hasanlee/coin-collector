@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const path = require("path");
 const dotenv = require("dotenv");
 const adminRoutes = require("./routes/adminRoutes");
@@ -11,6 +12,15 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());
+app.use(
+  fileUpload({
+    limits: { fileSize: 5 * 1024 * 1024 },
+    safeFileNames: true,
+    preserveExtension: true,
+    abortOnLimit: true,
+    responseOnLimit: true,
+  })
+);
 app.use("/static", express.static(path.join(__dirname, "public")));
 
 //Routes
@@ -23,6 +33,6 @@ app.use(pageNotFoundHandler);
 app.use(errorHandler);
 
 //App Start
-app.listen(process.env.SERVER_PORT, () => {
-  console.log(`App listening on port ${process.env.SERVER_PORT}`);
+app.listen(process.env.SERVER_PORT || 3000, () => {
+  console.log(`App listening on port ${process.env.SERVER_PORT || 3000}`);
 });
