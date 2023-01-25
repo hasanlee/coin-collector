@@ -1,8 +1,9 @@
 const express = require("express");
+const path = require("path");
 const dotenv = require("dotenv");
 const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require("./routes/userRoutes");
-const authRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
 const { auth } = require("./middlewares/auth");
 const { pageNotFoundHandler } = require("./middlewares/pageNotFoundHandler");
 const { errorHandler } = require("./middlewares/globalErrorHandler");
@@ -10,6 +11,7 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());
+app.use("/static", express.static(path.join(__dirname, "public")));
 
 //Routes
 app.use("/", userRoutes);

@@ -3,7 +3,7 @@ const { trycatch } = require("../../utils/trycatch");
 
 //const funcTemplate = trycatch(async (req, res, next) => {});
 
-//Get Data from DB
+//#region Get Data from DB
 const getAllCoins = trycatch(async (req, res, next) => {
   await (
     await connection
@@ -16,7 +16,7 @@ const getAllCoins = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
-const getAllCoinsCustom = trycatch(async (req, res, next) => {
+const getAllCoinsView = trycatch(async (req, res, next) => {
   await (
     await connection
   )
@@ -40,7 +40,7 @@ const getCoinById = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
-const getCoinByIdCustom = trycatch(async (req, res, next) => {
+const getCoinByIdView = trycatch(async (req, res, next) => {
   await (
     await connection
   )
@@ -100,8 +100,8 @@ const getAllTypes = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
-
-//Insert data to DB
+//#endregion
+//#region Insert data to DB
 const addNewCoin = trycatch(async (req, res, next) => {
   await (
     await connection
@@ -162,8 +162,8 @@ const addNewType = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
-
-//Update
+//#endregion
+//#region Update
 const updateCoin = trycatch(async (req, res, next) => {
   await (
     await connection
@@ -224,8 +224,8 @@ const updateType = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
-
-//Delete
+//#endregion
+//#region Delete
 const deleteCoin = trycatch(async (req, res, next) => {
   await (
     await connection
@@ -321,5 +321,30 @@ const deleteType = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
+//#endregion
 
-module.exports = {};
+module.exports = {
+  getAllCoins,
+  getAllCoinsView,
+  getCoinById,
+  getCoinByIdView,
+  getAllCountries,
+  getAllCompositions,
+  getAllQualities,
+  getAllTypes,
+  addNewCoin,
+  addNewCountry,
+  addNewComposition,
+  addNewQuality,
+  addNewType,
+  updateCoin,
+  updateCountry,
+  updateComposition,
+  updateQuality,
+  updateType,
+  deleteCoin,
+  deleteCountry,
+  deleteComposition,
+  deleteQuality,
+  deleteType,
+};
