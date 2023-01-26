@@ -10,6 +10,8 @@ const {
   getAllTypes,
   getCoinById,
   getCoinByIdView,
+  increaseView,
+  getViewCount,
 } = require("../controllers/coin");
 const {
   favorite_coin,
@@ -56,6 +58,15 @@ userRoutes.get("/types", function (req, res, next) {
 userRoutes.get("/coins/:id", function (req, res, next) {
   getCoinById(req, res, next);
 });
+
+userRoutes.post("/coin/view/:id", function (req, res, next) {
+  increaseView(req, res, next);
+});
+
+userRoutes.get("/coin/views/:id", function (req, res, next) {
+  getViewCount(req, res, next);
+});
+
 //#endregion
 //#region Auth required
 userRoutes.post("/like/:id", auth, function (req, res, next) {

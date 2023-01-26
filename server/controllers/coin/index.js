@@ -339,6 +339,32 @@ const deleteType = trycatch(async (req, res, next) => {
     });
 });
 //#endregion
+const increaseView = trycatch(async (req, res, next) => {
+  const { params } = req;
+  await (
+    await connection
+  )
+    .query("SELECT increase_coin_view(?) as view_count", [params.id])
+    .then(([data]) => {
+      return res.status(200).json(data[0]);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+});
+const getViewCount = trycatch(async (req, res, next) => {
+  const { params } = req;
+  await (
+    await connection
+  )
+    .query("SELECT view_count FROM coin_views WHERE coinId=?", [params.id])
+    .then(([data]) => {
+      return res.status(200).json(data[0]);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+});
 
 module.exports = {
   getAllCoins,
@@ -364,4 +390,6 @@ module.exports = {
   deleteComposition,
   deleteQuality,
   deleteType,
+  increaseView,
+  getViewCount,
 };
