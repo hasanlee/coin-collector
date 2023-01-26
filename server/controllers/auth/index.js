@@ -12,7 +12,6 @@ const login = trycatch(async (req, res, next) => {
 
   //Check user
   const user = rows[0];
-  console.log(user);
   if (!user) throw new Error("User not found");
 
   //Check password
@@ -21,11 +20,18 @@ const login = trycatch(async (req, res, next) => {
 
   // Generate an access token
   const accessToken = jwt.sign(
-    { username: user.username },
-    process.env.JWT_SECRET_TOKEN
+    { userId: user.id },
+    process.env.JWT_SECRET_TOKEN,
+    { expiresIn: process.env.JWT_EXPIRE }
   );
+  res.json({
+    accessToken,
+    expiredAt: new Date(jwt.decode(accessToken).exp * 1000),
+  });
+});
 
-  res.json({ accessToken });
+const logout = trycatch(async (req, res, next) => {
+  console.log(req);
 });
 
 //Register new User

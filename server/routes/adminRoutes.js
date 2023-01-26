@@ -16,10 +16,10 @@ const {
   deleteCountry,
   deleteQuality,
   deleteType,
-} = require("../services/coin");
+} = require("../controllers/coin");
 
 adminRoutes.get("/", (req, res) => {
-  res.send("Auth");
+  res.json(req.user);
 });
 
 //#region POST
@@ -85,4 +85,8 @@ adminRoutes.delete("/type/:id", (req, res, next) => {
   deleteType(req, res, next);
 });
 //#endregion
+//#region Dashboard
+
+//#endregion
+
 module.exports = adminRoutes;

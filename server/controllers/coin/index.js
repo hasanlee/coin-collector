@@ -35,8 +35,8 @@ const getCoinById = trycatch(async (req, res, next) => {
   )
     .query("SELECT * FROM coins WHERE id = ?;", [req.params.id])
     .then(([rows]) => {
-      if (rows.length > 1)
-        return res.status(200).json({ data: rows, count: rows.length });
+      console.log(rows);
+      if (rows.length > 0) return res.status(200).json(rows[0]);
       return res.status(404).json({ error: true, message: "Coin not found." });
     })
     .catch((err) => {
