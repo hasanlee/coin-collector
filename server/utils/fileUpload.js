@@ -15,7 +15,7 @@ const fileUpload = (file) => {
       throw error;
     }
   });
-  return fileName;
+  return `/static/uploads/${fileName}`;
 };
 
 module.exports = { fileUpload };
