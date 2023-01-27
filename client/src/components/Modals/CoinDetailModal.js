@@ -1,39 +1,93 @@
 import React, { useState } from "react";
-import { Modal, Button } from "flowbite-react";
+import { Modal, Avatar, Table } from "flowbite-react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal } from "../../redux/stores/CoinSlice";
+import UserActions from "../UserActions/UserActions";
 
-export default function CoinDetailModal(showModal) {
-  const [modalState, setModalState] = useState(showModal);
-  console.log(modalState);
+export default function CoinDetailModal() {
+  const { modalState, coinDetail } = useSelector((state) => state.coinReducer);
+  const {
+    coinId,
+    coinName,
+    shortDescription,
+    description,
+    issuedCountryId,
+    issuedByCountry,
+    compositionId,
+    composition,
+    qualityId,
+    quality,
+    denomination,
+    year,
+    weight,
+    price,
+    typeId,
+    type,
+    faceImage,
+    backImage,
+  } = coinDetail;
+  const dispatch = useDispatch();
+  const closeModal = () => {
+    dispatch(toggleModal(false));
+  };
   return (
     <>
-      <Modal show={!modalState}>
-        <Modal.Header>Terms of Service</Modal.Header>
+      <Modal
+        show={modalState}
+        size='7xl'
+        dismissible={true}
+        onClose={closeModal}
+      >
+        <Modal.Header>{coinName}</Modal.Header>
         <Modal.Body>
-          <div className='space-y-6'>
-            <p className='text-base leading-relaxed text-gray-500 dark:text-gray-400'>
-              With less than a month to go before the European Union enacts new
-              consumer privacy laws for its citizens, companies around the world
-              are updating their terms of service agreements to comply.
-            </p>
-            <p className='text-base leading-relaxed text-gray-500 dark:text-gray-400'>
-              The European Union’s General Data Protection Regulation (G.D.P.R.)
-              goes into effect on May 25 and is meant to ensure a common set of
-              data rights in the European Union. It requires organizations to
-              notify users as soon as possible of high-risk data breaches that
-              could personally affect them.
-            </p>
+          <div className='grid lg:grid-cols-4 gap-5 md:grid-cols-1 sm:grid-cols-1'>
+            <div className='lg:col-span-1 flex flex-col gap-12'>
+              <Avatar img={faceImage} rounded={true} size='xl' />
+              <Avatar img={backImage} rounded={true} size='xl' />
+              <UserActions />
+            </div>
+            <div className='lg:col-span-3 flex flex-col gap-8'>
+              <div className='flex flex-col gap-8'>
+                <p className='font-normal text-gray-700 dark:text-gray-400'>
+                  {shortDescription}
+                </p>
+                <p className='font-normal text-gray-700 dark:text-gray-400'>
+                  {description}
+                </p>
+              </div>
+              <div>
+                <Table className=''>
+                  <Table.Body className='divide-y text-black dark:text-white'>
+                    <Table.Row className='divide-x'>
+                      <Table.Cell>Issuing Country</Table.Cell>
+                      <Table.Cell>{issuedByCountry}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className='divide-x'>
+                      <Table.Cell>Composition</Table.Cell>
+                      <Table.Cell>{composition}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className='divide-x'>
+                      <Table.Cell>Quality</Table.Cell>
+                      <Table.Cell>{quality}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className='divide-x'>
+                      <Table.Cell>Denomination</Table.Cell>
+                      <Table.Cell>{denomination}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className='divide-x'>
+                      <Table.Cell>Year</Table.Cell>
+                      <Table.Cell>{year}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className='divide-x'>
+                      <Table.Cell>Weight</Table.Cell>
+                      <Table.Cell>{weight}</Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
+              </div>
+            </div>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button
-            color='gray'
-            onClick={() => {
-              setModalState(false);
-            }}
-          >
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Header from "../Layout/Header";
-import Categories from "../../../components/Category/Categories";
+import CategoryList from "../../../components/Category/CategoryList";
 
 export default function MainPage() {
   return (
@@ -12,7 +12,7 @@ export default function MainPage() {
           <SearchBar />
         </div>
         <div>
-          <Categories />
+          <CategoryList />
         </div>
       </main>
     </>
