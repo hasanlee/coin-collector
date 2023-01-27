@@ -10,7 +10,7 @@ export default function UserActions({
     <>
       <div className='w-48'>
         <ListGroup>
-          <ListGroup.Item>
+          <ListGroup.Item disabled={true}>
             <span className='flex gap-2 items-center'>
               <Badge>
                 <FaEye />
@@ -18,7 +18,7 @@ export default function UserActions({
               <p>Views : {view_count || 0}</p>
             </span>
           </ListGroup.Item>
-          <ListGroup.Item>
+          <ListGroup.Item disabled={true}>
             <span className='flex gap-2 items-center'>
               <Badge color='warning'>
                 <FaStar />
@@ -26,7 +26,7 @@ export default function UserActions({
               <p>Favorited : {favorite_count || 0}</p>
             </span>
           </ListGroup.Item>
-          <ListGroup.Item>
+          <ListGroup.Item disabled={true}>
             <span className='flex gap-2 items-center'>
               <Badge color='failure'>
                 <FaHeart />

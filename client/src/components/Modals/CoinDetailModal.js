@@ -25,6 +25,9 @@ export default function CoinDetailModal() {
     type,
     faceImage,
     backImage,
+    viewCount,
+    likeCount,
+    favoriteCount,
   } = coinDetail;
   const dispatch = useDispatch();
   const closeModal = () => {
@@ -44,7 +47,11 @@ export default function CoinDetailModal() {
             <div className='lg:col-span-1 flex flex-col gap-12'>
               <Avatar img={faceImage} rounded={true} size='xl' />
               <Avatar img={backImage} rounded={true} size='xl' />
-              <UserActions />
+              <UserActions
+                view_count={viewCount}
+                favorite_count={favoriteCount}
+                like_count={likeCount}
+              />
             </div>
             <div className='lg:col-span-3 flex flex-col gap-8'>
               <div className='flex flex-col gap-8'>
