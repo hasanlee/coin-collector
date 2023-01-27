@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import SignIn from "./pages/auth/LoginPage/SignIn";
 import SignUp from "./pages/auth/RegistrationPage/SignUp";
@@ -5,6 +7,18 @@ import ListPage from "./pages/home/ListPage/ListPage";
 import MainPage from "./pages/home/MainPage/MainPage";
 
 function App() {
+  const { darkMode } = useSelector((state) => state.setting);
+  const htmlEl = document.querySelector("html");
+  useEffect(() => {
+    switch (darkMode) {
+      case true:
+        htmlEl.classList.add("dark");
+        break;
+      default:
+        htmlEl.classList.remove("dark");
+        break;
+    }
+  }, [darkMode]);
   return (
     <div>
       <Routes>
