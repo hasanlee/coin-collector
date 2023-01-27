@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require("cors");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -10,7 +11,7 @@ const { pageNotFoundHandler } = require("./middlewares/pageNotFoundHandler");
 const { errorHandler } = require("./middlewares/globalErrorHandler");
 const app = express();
 dotenv.config();
-
+app.use(cors());
 app.use(express.json());
 app.use(
   fileUpload({
