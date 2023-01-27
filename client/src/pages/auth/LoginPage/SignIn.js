@@ -1,18 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { singIn } from "../../../services/coinApi";
+import { showAlert } from "../../../redux/stores/ToggleSlice.js";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const loginHandler = (e) => {
+  const dispatch = useDispatch();
+  const loginHandler = async (e) => {
     e.preventDefault();
     const formData = {
-      email,
+      username,
       password,
     };
-    console.log(formData);
+    await singIn(formData).then((res) => {
+      console.log(res);
+      if (res && res.error) {
+        dispatch(
+          showAlert({
+            head: "Login error",
+            type: "failure",
+            body: res.message,
+            id: Math.random(),
+          })
+        );
+        console.log(res.message);
+      }
+    });
   };
+
   return (
     <>
       <div className='flex justify-center pt-[10%]'>
@@ -33,19 +51,19 @@ export default function SignIn() {
             </h5>
             <div>
               <label
-                htmlFor='email'
+                htmlFor='username'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Your email
+                Username
               </label>
               <input
-                type='email'
-                name='email'
-                id='email'
+                type='text'
+                name='username'
+                id='username'
                 className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                placeholder='name@company.com'
+                placeholder='username'
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setUsername(e.target.value);
                 }}
                 required
               />

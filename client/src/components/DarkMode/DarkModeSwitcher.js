@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleDarkMode } from "../../redux/stores/SettingSlice";
+import { toggleDarkMode } from "../../redux/stores/ToggleSlice";
 
 export default function DarkModeSwitcher() {
-  const { darkMode } = useSelector((state) => state.setting);
+  const { darkMode } = useSelector((state) => state.toggle);
   // const htmlEl = document.querySelector("html");
   const dispatch = useDispatch();
   const switchTheme = () => {

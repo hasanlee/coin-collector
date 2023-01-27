@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Modal, Avatar, Table } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModal } from "../../redux/stores/CoinSlice";
+import { toggleModal } from "../../redux/stores/ToggleSlice";
 import UserActions from "../UserActions/UserActions";
 
 export default function CoinDetailModal() {
-  const { modalState, coinDetail } = useSelector((state) => state.coinReducer);
+  const { coinDetail } = useSelector((state) => state.coinReducer);
+  const { modalState } = useSelector((state) => state.toggle);
   const {
     coinId,
     coinName,

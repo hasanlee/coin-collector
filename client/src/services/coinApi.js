@@ -26,4 +26,19 @@ async function getAllCoinTypes(query) {
     return [];
   }
 }
-export { getAllCoins, getAllCoinTypes };
+
+//Auth
+async function singIn(data) {
+  const client = applyCaseMiddleware(axios.create());
+  try {
+    const response = await client.post(
+      process.env.REACT_APP_API_URL + "/auth/login",
+      data
+    );
+    console.error(response.data);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
+export { getAllCoins, getAllCoinTypes, singIn };
