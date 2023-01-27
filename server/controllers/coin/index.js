@@ -18,10 +18,13 @@ const getAllCoins = trycatch(async (req, res, next) => {
     });
 });
 const getAllCoinsView = trycatch(async (req, res, next) => {
+  const { query } = req.query;
   await (
     await connection
   )
-    .query("SELECT * FROM AllCoinsDetailed;")
+    .query(
+      `SELECT * FROM AllCoinsDetailed WHERE coinName LIKE '%${query}%' OR shortDescription LIKE '%${query}%' OR description = '%${query}%';`
+    )
     .then(([rows]) => {
       return res.status(200).json(rows);
     })
@@ -92,10 +95,13 @@ const getAllQualities = trycatch(async (req, res, next) => {
     });
 });
 const getAllTypes = trycatch(async (req, res, next) => {
+  const { query } = req.query;
   await (
     await connection
   )
-    .query("SELECT * FROM types;")
+    .query(
+      `SELECT * FROM types WHERE name LIKE '%${query}%' OR description LIKE '%${query}%';`
+    )
     .then(([rows]) => {
       return res.status(200).json(rows);
     })
