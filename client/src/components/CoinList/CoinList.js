@@ -18,13 +18,9 @@ export default function CoinList() {
   return (
     <>
       <CoinDetailModal />
-      <div className='m-3 grid gap-5 lg:grid-cols-3 md:grid-cols-3'>
+      <div className='m-3 grid gap-5 lg:grid-cols-3 md:grid-cols-2'>
         {coins.map((coin) => {
-          return (
-            <>
-              <CoinItem key={coin.coinId} coin={coin} />
-            </>
-          );
+          return <CoinItem key={coin.coinId} coin={coin} />;
         })}
       </div>
     </>
