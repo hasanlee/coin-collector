@@ -38,14 +38,14 @@ export default function CoinDetailModal() {
     <>
       <Modal
         show={modalState}
-        size='7xl'
+        size='5xl'
         dismissible={true}
         onClose={closeModal}
       >
         <Modal.Header>{coinName}</Modal.Header>
         <Modal.Body>
           <div className='grid lg:grid-cols-4 gap-5 md:grid-cols-1 sm:grid-cols-1'>
-            <div className='lg:col-span-1 flex flex-col gap-12'>
+            <div className='lg:col-span-1 flex lg:flex-col gap-12 md:flex-row md:justify-between sm:flex-row sm:justify-between'>
               <Avatar img={faceImage} rounded={true} size='xl' />
               <Avatar img={backImage} rounded={true} size='xl' />
               <UserActions
@@ -56,16 +56,16 @@ export default function CoinDetailModal() {
             </div>
             <div className='lg:col-span-3 flex flex-col gap-8'>
               <div className='flex flex-col gap-8'>
-                <p className='font-normal text-gray-700 dark:text-gray-400'>
+                <p className='font-normal text-gray-700 dark:text-gray-400 md:text-sm sm:text-sm'>
                   {shortDescription}
                 </p>
-                <p className='font-normal text-gray-700 dark:text-gray-400'>
+                <p className='font-normal text-gray-700 dark:text-gray-400 lg:text-base text-sm'>
                   {description}
                 </p>
               </div>
               <div>
                 <Table className=''>
-                  <Table.Body className='divide-y text-black dark:text-white'>
+                  <Table.Body className='divide-y text-black dark:text-white lg:text-base text-sm'>
                     <Table.Row className='divide-x'>
                       <Table.Cell>Issuing Country</Table.Cell>
                       <Table.Cell>{issuedByCountry}</Table.Cell>

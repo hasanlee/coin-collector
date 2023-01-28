@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { singIn } from "../../../services/coinApi";
 import { showAlert } from "../../../redux/stores/ToggleSlice.js";
@@ -8,6 +9,8 @@ import { showAlert } from "../../../redux/stores/ToggleSlice.js";
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [cookies, setCookie] = useCookies(["access_token"]);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -16,7 +19,6 @@ export default function SignIn() {
       password,
     };
     await singIn(formData).then((res) => {
-      console.log(res);
       if (res && res.error) {
         dispatch(
           showAlert({
@@ -26,8 +28,13 @@ export default function SignIn() {
             id: Math.random(),
           })
         );
-        console.log(res.message);
+        return;
       }
+      setCookie("access_token", res.accessToken, {
+        path: "/",
+        expires: new Date(res.expiredAt),
+      });
+      navigate("/");
     });
   };
 

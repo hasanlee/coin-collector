@@ -18,7 +18,7 @@ export default function CategoryList() {
     fetchData();
   }, [query]);
   return (
-    <div className='m-3 grid gap-5 lg:grid-cols-3 md:grid-cols-3' ref={parent}>
+    <div className='m-3 grid gap-5 lg:grid-cols-3 md:grid-cols-2' ref={parent}>
       {types.map((type) => {
         return <CategoryItem {...type} key={type.id} />;
       })}

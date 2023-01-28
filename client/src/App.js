@@ -28,6 +28,7 @@ function App() {
         <Route path='/register' exact element={<SignUp />} />
         <Route path='/' exact element={<MainPage />} />
         <Route path='/coins' exact element={<ListPage />} />
+        <Route path='/coins/:slug' exact element={<ListPage />} />
       </Routes>
     </div>
   );

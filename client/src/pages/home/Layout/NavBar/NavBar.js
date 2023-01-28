@@ -1,8 +1,14 @@
 import React from "react";
+import { useCookies } from "react-cookie";
 import DarkModeSwitcher from "../../../../components/DarkMode/DarkModeSwitcher";
 import NavLinks from "./NavLinks";
+import AuthButtons from "./AuthButtons";
+import ProfileButton from "../../../../components/ProfileButton/ProfileButton";
+import { useJwt } from "react-jwt";
 
 export default function NavBar() {
+  const [cookies] = useCookies(["access_token"]);
+  const { decodedToken } = useJwt(cookies.access_token);
   return (
     <>
       <nav className='bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900'>
@@ -18,20 +24,11 @@ export default function NavBar() {
             </span>
           </a>
           <div className='flex md:order-2 gap-2'>
-            <a
-              href='/login'
-              type='button'
-              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-            >
-              Sign in
-            </a>
-            <a
-              href='/register'
-              type='button'
-              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-            >
-              Sign up
-            </a>
+            {decodedToken ? (
+              <ProfileButton user={decodedToken} />
+            ) : (
+              <AuthButtons />
+            )}
             <DarkModeSwitcher />
             <button
               data-collapse-toggle='navbar-cta'

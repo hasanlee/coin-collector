@@ -4,11 +4,13 @@ import CoinItem from "./CoinItem";
 import CoinDetailModal from "../Modals/CoinDetailModal";
 import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useParams } from "react-router-dom";
 
 export default function CoinList() {
   const { query } = useSelector((state) => state.searchReducer);
   const [parent, enableAnimations] = useAutoAnimate();
   const [coins, setCoins] = useState([]);
+  const { slug } = useParams();
   useEffect(() => {
     async function fetchData() {
       await getAllCoins(query).then((res) => {
