@@ -6,6 +6,11 @@ import SignIn from "./pages/auth/LoginPage/SignIn";
 import SignUp from "./pages/auth/RegistrationPage/SignUp";
 import ListPage from "./pages/home/ListPage/ListPage";
 import MainPage from "./pages/home/MainPage/MainPage";
+import AdminPage from "./pages/admin/AdminPage/AdminPage";
+import Dashboard from "./pages/admin/Dashboard/Dashboard";
+import CoinList from "./pages/admin/Coins/CoinList";
+import CoinEdit from "./pages/admin/Coins/CoinEdit";
+import CoinAdd from "./pages/admin/Coins/CoinAdd";
 
 function App() {
   const { darkMode } = useSelector((state) => state.toggle);
@@ -29,6 +34,12 @@ function App() {
         <Route path='/' exact element={<MainPage />} />
         <Route path='/coins' exact element={<ListPage />} />
         <Route path='/coins/:slug' exact element={<ListPage />} />
+        <Route exact path='/admin' element={<AdminPage />}>
+          <Route exact path='/admin/dashboard' element={<Dashboard />} />
+          <Route exact path='/admin/coins' element={<CoinList />} />
+          <Route exact path='/admin/coins/edit/:id' element={<CoinEdit />} />
+          <Route exact path='/admin/coins/add' element={<CoinAdd />} />
+        </Route>
       </Routes>
     </div>
   );

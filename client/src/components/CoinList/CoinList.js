@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { getAllCoins } from "../../services/coinApi";
+import React, { useEffect } from "react";
 import CoinItem from "./CoinItem";
 import CoinDetailModal from "../Modals/CoinDetailModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useParams } from "react-router-dom";
+import { getAllCoins } from "../../redux/stores/CoinSlice";
 
 export default function CoinList() {
+  const dispatch = useDispatch();
+  const { coins, loading, error } = useSelector((state) => state.coinReducer);
   const { query } = useSelector((state) => state.searchReducer);
   const [parent, enableAnimations] = useAutoAnimate();
-  const [coins, setCoins] = useState([]);
   const { slug } = useParams();
+
   useEffect(() => {
-    async function fetchData() {
-      await getAllCoins(query).then((res) => {
-        setCoins(res);
-      });
+    function fetchData() {
+      dispatch(getAllCoins(""));
     }
     fetchData();
   }, [query]);

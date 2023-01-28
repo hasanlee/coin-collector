@@ -1,19 +1,18 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { getAllCoinTypes } from "../../services/coinApi";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCoinTypes } from "../../redux/stores/CoinSlice";
 import CategoryItem from "./CategoryItem";
 
 export default function CategoryList() {
   const { query } = useSelector((state) => state.searchReducer);
+  const { types, loading, error } = useSelector((state) => state.coinReducer);
+  const dispatch = useDispatch();
   const [parent, enableAnimations] = useAutoAnimate();
-  const [types, setTypes] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
-      await getAllCoinTypes(query).then((res) => {
-        setTypes(res);
-      });
+    function fetchData() {
+      dispatch(getAllCoinTypes(""));
     }
     fetchData();
   }, [query]);
