@@ -1,6 +1,7 @@
 import { Avatar, Dropdown } from "flowbite-react";
 import React from "react";
 import { useCookies } from "react-cookie";
+import { NavLink } from "react-router-dom";
 
 export default function ProfileButton({ user }) {
   const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
@@ -28,7 +29,9 @@ export default function ProfileButton({ user }) {
               name@flowbite.com
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
+          <Dropdown.Item>
+            <NavLink to='/admin/dashboard'>Dashboard</NavLink>
+          </Dropdown.Item>
           <Dropdown.Item>Settings</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>
