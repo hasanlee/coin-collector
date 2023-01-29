@@ -1,13 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function TextArea({
-  label,
-  name,
-  id,
-  placeholder,
-  onChange,
-  value,
-}) {
+export default function TextArea({ label, name, id, placeholder, value }) {
+  const [text, setText] = useState(value);
   return (
     <div className='mb-6'>
       <label
@@ -22,8 +16,10 @@ export default function TextArea({
         rows='4'
         className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         placeholder={placeholder}
-        value={value}
-        onChange={onChange}
+        value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
       ></textarea>
     </div>
   );

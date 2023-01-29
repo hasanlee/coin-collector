@@ -5,21 +5,23 @@ import SelectBox from "../../../components/Input/SelectBox";
 import TextArea from "../../../components/Input/TextArea";
 import { FaDollarSign } from "react-icons/fa";
 import CountrySelector from "../../../components/Input/CountrySelector";
+import OverlayLoading from "../../../components/LoadingSpinner/OverlayLoading";
 import {
   getAllCountries,
   getAllCoinTypes,
   getAllCompositions,
   getAllQualities,
   getCoinById,
+  submitEditCoin,
 } from "../../../redux/stores/CoinSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 export default function CoinEdit() {
-  const { types, compositions, qualities, countries, coin, loadin, error } =
+  const { types, compositions, qualities, countries, coin, loading, error } =
     useSelector((state) => state.coinReducer);
   const {
-    id: coind,
+    id: coinId,
     name: coinName,
     short_description: shortDescription,
     description,
@@ -40,7 +42,11 @@ export default function CoinEdit() {
     e.preventDefault();
     const data = new FormData(e.target);
     let formObject = Object.fromEntries(data.entries());
-    console.log(formObject);
+    const postData = {
+      id,
+      data: formObject,
+    };
+    dispatch(submitEditCoin(postData));
   };
 
   useEffect(() => {
@@ -56,6 +62,8 @@ export default function CoinEdit() {
 
   return (
     <>
+      {loading ? <OverlayLoading /> : null}
+      {error ? error.message : null}
       <form onSubmit={submitHandler}>
         <div className='flex flex-col gap-5'>
           <div className='grid lg:grid-cols-8 gap-5 md:grid-cols-8 grid-cols-1'>
@@ -177,7 +185,13 @@ export default function CoinEdit() {
               />
             </div>
           </div>
-          <div className='flex justify-end'>
+          <div className='flex justify-between'>
+            <NavLink
+              to='/admin/coins'
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+            >
+              Back list
+            </NavLink>
             <button
               type='submit'
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'

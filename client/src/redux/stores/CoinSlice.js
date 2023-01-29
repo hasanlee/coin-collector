@@ -55,6 +55,21 @@ export const getCoinById = createAsyncThunk("getCoinById", async (id) => {
   );
   return response.data;
 });
+export const submitEditCoin = createAsyncThunk(
+  "submitEditCoin",
+  async ({ id, data }, { rejectWithValue }) => {
+    console.log(id, data);
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_API_URL + "/admin/coin/" + id,
+        data
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 const coinReducer = createSlice({
   name: "coinReducer",
@@ -149,6 +164,21 @@ const coinReducer = createSlice({
       state.loading = false;
     });
     builder.addCase(getCoinById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region getCoinById
+    builder.addCase(submitEditCoin.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+    });
+    builder.addCase(submitEditCoin.fulfilled, (state, action) => {
+      state.coin = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitEditCoin.rejected, (state, action) => {
+      console.log(action);
       state.loading = false;
       state.error = action.payload;
     });

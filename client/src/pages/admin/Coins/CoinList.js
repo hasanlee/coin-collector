@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCoins } from "../../../redux/stores/CoinSlice";
 import { NavLink } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
 function TablerRow({ coin }) {
   const {
     coinId,
@@ -39,12 +39,20 @@ function TablerRow({ coin }) {
       <td className='px-6 py-4'>{issuedByCountry}</td>
       <td className='px-6 py-4'>{year}</td>
       <td className='px-6 py-4'>
-        <a
-          href={"coins/edit/" + coinId}
-          className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
-        >
-          Edit
-        </a>
+        <div className='inline-flex rounded-md shadow-sm' role='group'>
+          <NavLink
+            to={"edit/" + coinId}
+            className='inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-blue-400 dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
+          >
+            <FaEdit />
+          </NavLink>
+          <NavLink
+            to={"delete/" + coinId}
+            className='inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-red-400 dark:hover:text-red-500 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
+          >
+            <FaTrash />
+          </NavLink>
+        </div>
       </td>
     </tr>
   );
@@ -92,33 +100,29 @@ export default function CoinList() {
             </div>
           </div>
           <div className='pb-4 bg-white dark:bg-gray-900'>
-            <div className='relative mt-1'>
-              <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none dark:text-white'>
-                <FaPlus />
-              </div>
-              <NavLink
-                to='add/'
-                className='w-full block p-2 pl-10 pr-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              >
-                Add new
-              </NavLink>
-            </div>
+            <NavLink
+              to='add/'
+              className='inline-flex gap-3 items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
+            >
+              <FaPlus className='text-green-400' />
+              Add new
+            </NavLink>
           </div>
         </div>
         <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
-                Product name
+                Coin name
               </th>
               <th scope='col' className='px-6 py-3'>
-                Color
+                Matal
               </th>
               <th scope='col' className='px-6 py-3'>
-                Category
+                Issued Country
               </th>
               <th scope='col' className='px-6 py-3'>
-                Price
+                Year
               </th>
               <th scope='col' className='px-6 py-3'>
                 Action

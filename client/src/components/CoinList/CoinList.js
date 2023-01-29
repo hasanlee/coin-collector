@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useParams } from "react-router-dom";
 import { getAllCoins } from "../../redux/stores/CoinSlice";
+import OverlayLoading from "../LoadingSpinner/OverlayLoading";
+import CustomAlert from "../Alert/CustomAlert";
 
 export default function CoinList() {
   const dispatch = useDispatch();
@@ -15,13 +17,14 @@ export default function CoinList() {
 
   useEffect(() => {
     function fetchData() {
-      dispatch(getAllCoins(""));
+      dispatch(getAllCoins(query));
     }
     fetchData();
   }, [query]);
   return (
     <>
       <CoinDetailModal />
+      {loading ? <OverlayLoading /> : null}
       <div
         className='m-3 grid gap-5 lg:grid-cols-3 md:grid-cols-2'
         ref={parent}

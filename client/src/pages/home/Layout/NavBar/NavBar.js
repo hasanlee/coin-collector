@@ -24,11 +24,7 @@ export default function NavBar() {
             </span>
           </a>
           <div className='flex md:order-2 gap-2'>
-            {decodedToken ? (
-              <ProfileButton user={decodedToken} />
-            ) : (
-              <AuthButtons />
-            )}
+            {decodedToken ? <ProfileButton /> : <AuthButtons />}
             <DarkModeSwitcher />
             <button
               data-collapse-toggle='navbar-cta'

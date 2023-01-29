@@ -191,6 +191,7 @@ const updateCoin = trycatch(async (req, res, next) => {
     imageUrl_front: frontImg,
     imageUrl_back: backImg,
   };
+  return res.json(data);
   await (
     await connection
   )

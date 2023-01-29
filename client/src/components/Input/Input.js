@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Input({
   label,
@@ -7,11 +7,11 @@ export default function Input({
   id,
   placeholder,
   required,
-  onChange,
   value,
   icon,
   autoComplete,
 }) {
+  const [inputValue, setInputValue] = useState(value);
   return (
     <div className='mb-6'>
       <label
@@ -36,8 +36,10 @@ export default function Input({
           } shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light`}
           placeholder={placeholder}
           name={name}
-          value={value}
-          onChange={onChange}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
           required={required}
           autoComplete={autoComplete}
         />

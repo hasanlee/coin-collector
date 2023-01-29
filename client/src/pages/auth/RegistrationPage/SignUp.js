@@ -1,18 +1,45 @@
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { singUp } from "../../../services/coinApi";
+import { showAlert } from "../../../redux/stores/ToggleSlice.js";
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const registerHandler = (e) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const registerHandler = async (e) => {
     e.preventDefault();
     const formData = {
       username,
       email,
       password,
     };
-    console.log(formData);
+    await singUp(formData).then((res) => {
+      if (res && res.error) {
+        dispatch(
+          showAlert({
+            head: "Login error",
+            type: "failure",
+            body: res.message,
+            id: Math.random(),
+          })
+        );
+        return;
+      }
+      dispatch(
+        showAlert({
+          head: "Registration",
+          type: "success",
+          body: "Successfully registered.",
+          id: Math.random(),
+        })
+      );
+      navigate("/login");
+    });
   };
   return (
     <>
@@ -84,7 +111,7 @@ export default function SignUp() {
                 id='password'
                 placeholder='••••••••'
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setPassword(e.target.value);
                 }}
                 className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                 required
