@@ -20,9 +20,18 @@ const login = trycatch(async (req, res, next) => {
 
   // Generate an access token
   const accessToken = jwt.sign(
-    { userId: user.id },
+    {
+      id: user.id,
+      username: user.username,
+      fullname: user.fullname,
+      email: user.email,
+      avatarId: user.avatarId,
+      roleId: user.roleId,
+    },
     process.env.JWT_SECRET_TOKEN,
-    { expiresIn: process.env.JWT_EXPIRE }
+    {
+      expiresIn: process.env.JWT_EXPIRE,
+    }
   );
   res.json({
     accessToken,
@@ -36,14 +45,15 @@ const logout = trycatch(async (req, res, next) => {
 
 //Register new User
 const register = trycatch(async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   const hashPass = bcrypt.hashSync(password, 10);
   await (
     await connection
   )
-    .query("INSERT INTO users (username, password) VALUES  (?,?)", [
+    .query("INSERT INTO users (username, password,email) VALUES  (?,?,?)", [
       username,
       hashPass,
+      email,
     ])
     .then(([data]) => {
       return res.status(200).json(data.insertId);

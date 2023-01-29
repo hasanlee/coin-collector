@@ -8,7 +8,7 @@ const like_coin = trycatch(async (req, res, next) => {
   await (
     await connection
   )
-    .query("CALL like_coin(?,?)", [user.userId, params.id])
+    .query("CALL like_coin(?,?)", [user.id, params.id])
     .then(([data]) => {
       return res.status(200).json(data.affectedRows);
     })
@@ -23,7 +23,7 @@ const dislike_coin = trycatch(async (req, res, next) => {
     await connection
   )
     .query("DELETE FROM likes WHERE userId=? AND coinId=?", [
-      user.userId,
+      user.id,
       params.id,
     ])
     .then(([data]) => {
@@ -53,7 +53,7 @@ const check_liked = trycatch(async (req, res, next) => {
   await (
     await connection
   )
-    .query("SELECT check_user_like(?,?) as liked", [user.userId, params.id])
+    .query("SELECT check_user_like(?,?) as liked", [user.id, params.id])
     .then(([data]) => {
       return res.status(200).json(data[0]);
     })

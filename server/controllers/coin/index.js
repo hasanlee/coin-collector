@@ -116,6 +116,7 @@ const addNewCoin = trycatch(async (req, res, next) => {
   let backImg = fileUpload(req.files.file2);
   const data = {
     ...req.body,
+    created_by: req.user.id,
     imageUrl_front: frontImg,
     imageUrl_back: backImg,
   };
@@ -185,6 +186,8 @@ const updateCoin = trycatch(async (req, res, next) => {
   let backImg = fileUpload(req.files.file2);
   const data = {
     ...req.body,
+    updated_by: req.user.id,
+    update_at: Date.now(),
     imageUrl_front: frontImg,
     imageUrl_back: backImg,
   };

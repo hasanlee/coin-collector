@@ -7,7 +7,7 @@ const favorite_coin = trycatch(async (req, res, next) => {
   await (
     await connection
   )
-    .query("CALL favorite_coin(?,?)", [user.userId, params.id])
+    .query("CALL favorite_coin(?,?)", [user.id, params.id])
     .then(([data]) => {
       return res.status(200).json(data.affectedRows);
     })
@@ -22,7 +22,7 @@ const remove_favorite = trycatch(async (req, res, next) => {
     await connection
   )
     .query("DELETE FROM favorites WHERE userId=? AND coinId=?", [
-      user.userId,
+      user.id,
       params.id,
     ])
     .then(([data]) => {
@@ -37,7 +37,7 @@ const favorites = trycatch(async (req, res, next) => {
   await (
     await connection
   )
-    .query("CALL favorited_coins(?)", [req.user.userId])
+    .query("CALL favorited_coins(?)", [req.user.id])
     .then(([data]) => {
       return res.status(200).json(data[0]);
     })
@@ -51,7 +51,7 @@ const check_favorited = trycatch(async (req, res, next) => {
     await connection
   )
     .query("SELECT check_user_favorited(?,?) as favorited", [
-      user.userId,
+      user.id,
       params.id,
     ])
     .then(([data]) => {
