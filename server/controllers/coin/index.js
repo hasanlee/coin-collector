@@ -38,7 +38,6 @@ const getCoinById = trycatch(async (req, res, next) => {
   )
     .query("SELECT * FROM coins WHERE id = ?;", [req.params.id])
     .then(([rows]) => {
-      console.log(rows);
       if (rows.length > 0) return res.status(200).json(rows[0]);
       return res.status(404).json({ error: true, message: "Coin not found." });
     })
@@ -181,17 +180,18 @@ const addNewType = trycatch(async (req, res, next) => {
 });
 //#endregion
 //#region Update
+//! file upload yoxla xetalidi
 const updateCoin = trycatch(async (req, res, next) => {
-  let frontImg = fileUpload(req.files.file1);
-  let backImg = fileUpload(req.files.file2);
+  console.log(req.files);
+  let frontImg = req.files ? fileUpload(req.files.file1) : "";
+  let backImg = req.files ? fileUpload(req.files.file2) : "";
   const data = {
     ...req.body,
     updated_by: req.user.id,
-    update_at: Date.now(),
+    //updated_at: "",
     imageUrl_front: frontImg,
     imageUrl_back: backImg,
   };
-  return res.json(data);
   await (
     await connection
   )

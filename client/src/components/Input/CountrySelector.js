@@ -25,7 +25,7 @@ export default function CountrySelector({
       >
         {label}
       </label>
-      <Listbox name={name} value={selected} onChange={onChangeHandler}>
+      <Listbox name={name} value={selected.code} onChange={onChangeHandler}>
         <div className='relative mt-1'>
           <Listbox.Button className='relative cursor-default text-left rounded-lg shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light'>
             <span className='block truncate'>

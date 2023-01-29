@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../utils/axiosInstance";
 const initialState = {
   loading: false,
   error: {},
@@ -60,10 +60,18 @@ export const submitEditCoin = createAsyncThunk(
   async ({ id, data }, { rejectWithValue }) => {
     console.log(id, data);
     try {
-      const response = await axios.post(
-        process.env.REACT_APP_API_URL + "/admin/coin/" + id,
-        data
-      );
+      const response = await axios.put("/admin/coin/" + id, data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitDeleteCoin = createAsyncThunk(
+  "submitDeleteCoin",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete("/admin/coin/" + id);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -168,7 +176,7 @@ const coinReducer = createSlice({
       state.error = action.payload;
     });
     //#endregion
-    //#region getCoinById
+    //#region editCoin
     builder.addCase(submitEditCoin.pending, (state, action) => {
       state.loading = true;
       state.error = "";
@@ -178,6 +186,21 @@ const coinReducer = createSlice({
       state.loading = false;
     });
     builder.addCase(submitEditCoin.rejected, (state, action) => {
+      console.log(action);
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region deleteCoin
+    builder.addCase(submitDeleteCoin.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+    });
+    builder.addCase(submitDeleteCoin.fulfilled, (state, action) => {
+      state.coin = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitDeleteCoin.rejected, (state, action) => {
       console.log(action);
       state.loading = false;
       state.error = action.payload;

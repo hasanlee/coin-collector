@@ -64,7 +64,7 @@ export default function CoinEdit() {
     <>
       {loading ? <OverlayLoading /> : null}
       {error ? error.message : null}
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} encType='multipart/form-data'>
         <div className='flex flex-col gap-5'>
           <div className='grid lg:grid-cols-8 gap-5 md:grid-cols-8 grid-cols-1'>
             <div className='lg:col-span-4 md:col-span-4 col-span-1 flex flex-col'>
@@ -97,8 +97,8 @@ export default function CoinEdit() {
                 icon={<FaDollarSign />}
               />
               <CountrySelector
-                name='issued_countryId'
-                id='issued_countryId'
+                name='issued_countryCode'
+                id='issued_countryCode'
                 label='Country'
                 countries={countries}
               />
@@ -168,7 +168,6 @@ export default function CoinEdit() {
           <div className='grid lg:grid-cols-8 gap-5 md:grid-cols-8 grid-cols-1'>
             <div className='col-span-1 md:col-span-4 lg-col-span-4 flex flex-col'>
               <InputFile
-                name='file1'
                 id='file1'
                 placeholder='Front Image'
                 label={"Click to upload or drag and drop"}
@@ -178,7 +177,6 @@ export default function CoinEdit() {
             <div className='col-span-1 md:col-span-4 lg-col-span-4 flex flex-col'>
               <InputFile
                 id='file2'
-                name='file2'
                 placeholder='Back Image'
                 label={"Click to upload or drag and drop"}
                 value={backImage}

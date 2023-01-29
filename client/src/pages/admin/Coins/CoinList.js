@@ -3,64 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCoins } from "../../../redux/stores/CoinSlice";
 import { NavLink } from "react-router-dom";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
-function TablerRow({ coin }) {
-  const {
-    coinId,
-    coinName,
-    shortDescription,
-    description,
-    issuedCountryId,
-    issuedByCountry,
-    compositionId,
-    composition,
-    qualityId,
-    quality,
-    denomination,
-    year,
-    weight,
-    price,
-    typeId,
-    type,
-    faceImage,
-    backImage,
-    viewCount,
-    likeCount,
-    favoriteCount,
-  } = coin;
-  return (
-    <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
-      <td
-        scope='row'
-        className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
-      >
-        {coinName}
-      </td>
-      <td className='px-6 py-4'>{composition}</td>
-      <td className='px-6 py-4'>{issuedByCountry}</td>
-      <td className='px-6 py-4'>{year}</td>
-      <td className='px-6 py-4'>
-        <div className='inline-flex rounded-md shadow-sm' role='group'>
-          <NavLink
-            to={"edit/" + coinId}
-            className='inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-blue-400 dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
-          >
-            <FaEdit />
-          </NavLink>
-          <NavLink
-            to={"delete/" + coinId}
-            className='inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-red-400 dark:hover:text-red-500 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
-          >
-            <FaTrash />
-          </NavLink>
-        </div>
-      </td>
-    </tr>
-  );
-}
+import Dialog from "../../../components/Dialog/Dialog";
 
 export default function CoinList() {
   const dispatch = useDispatch();
   const { coins, loading, error } = useSelector((state) => state.coinReducer);
+  const deleteHandle = (id, name) => {};
   useEffect(() => {
     function fetchData() {
       dispatch(getAllCoins(""));
@@ -69,6 +17,13 @@ export default function CoinList() {
   }, []);
   return (
     <>
+      <Dialog
+        show={true}
+        okBtnType='failure'
+        okText="Yes, I'm sure"
+        noText='No, Cancel'
+        message='Are you sure you want to delete this?'
+      />
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
         <div className='flex justify-between'>
           <div className='pb-4 bg-white dark:bg-gray-900'>
@@ -131,7 +86,43 @@ export default function CoinList() {
           </thead>
           <tbody>
             {coins?.map((coin) => {
-              return <TablerRow coin={coin} key={coin.coinId} />;
+              return (
+                <tr
+                  key={coin.coinId}
+                  className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
+                >
+                  <td
+                    scope='row'
+                    className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                  >
+                    {coin.coinName}
+                  </td>
+                  <td className='px-6 py-4'>{coin.composition}</td>
+                  <td className='px-6 py-4'>{coin.issuedByCountry}</td>
+                  <td className='px-6 py-4'>{coin.year}</td>
+                  <td className='px-6 py-4'>
+                    <div
+                      className='inline-flex rounded-md shadow-sm'
+                      role='group'
+                    >
+                      <NavLink
+                        to={"edit/" + coin.coinId}
+                        className='inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-blue-400 dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
+                      >
+                        <FaEdit />
+                      </NavLink>
+                      <button
+                        onClick={() => {
+                          deleteHandle(coin.coinId, coin.coinName);
+                        }}
+                        className='inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-red-400 dark:hover:text-red-500 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
             })}
           </tbody>
         </table>
