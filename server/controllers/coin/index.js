@@ -18,12 +18,27 @@ const getAllCoins = trycatch(async (req, res, next) => {
     });
 });
 const getAllCoinsView = trycatch(async (req, res, next) => {
-  const { query } = req.query;
+  const { s, type, country, quality, yearMin, yearMax, priceMin, priceMax } =
+    req.query;
   await (
     await connection
   )
     .query(
-      `SELECT * FROM AllCoinsDetailed WHERE coinName LIKE '%${query}%' OR shortDescription LIKE '%${query}%' OR description = '%${query}%';`
+      `SELECT * FROM AllCoinsDetailed WHERE 1=1 ${
+        s
+          ? `AND (coinName LIKE '%${s}%' OR 
+      shortDescription LIKE '%${s}%' OR 
+      description = '%${s}%') `
+          : ``
+      }
+      ${country ? ` AND issuedByCountry = '${country}'` : ``}
+      ${quality ? ` AND quality = '${quality}'` : ``}
+      ${yearMin ? ` AND year >= '${yearMin}'` : ``}
+      ${yearMax ? ` AND year <= '${yearMax}'` : ``}
+      ${priceMin ? ` AND price >= '${priceMin}'` : ``}
+      ${priceMax ? ` AND price <= '${priceMax}'` : ``}
+      ${type ? ` AND type = '${type}'` : ``}
+      ORDER BY coinName;`
     )
     .then(([rows]) => {
       return res.status(200).json(rows);
@@ -58,10 +73,11 @@ const getCoinByIdView = trycatch(async (req, res, next) => {
     });
 });
 const getAllCountries = trycatch(async (req, res, next) => {
+  const { s } = req.query;
   await (
     await connection
   )
-    .query("SELECT * FROM countries;")
+    .query(`SELECT * FROM countries ${s ? `WHERE name LIKE '%${s}%'` : ``};`)
     .then(([rows]) => {
       return res.status(200).json(rows);
     })
@@ -70,10 +86,11 @@ const getAllCountries = trycatch(async (req, res, next) => {
     });
 });
 const getAllCompositions = trycatch(async (req, res, next) => {
+  const { s } = req.query;
   await (
     await connection
   )
-    .query("SELECT * FROM compositions;")
+    .query(`SELECT * FROM compositions ${s ? `WHERE name LIKE '%${s}%'` : ``};`)
     .then(([rows]) => {
       return res.status(200).json(rows);
     })
@@ -82,10 +99,11 @@ const getAllCompositions = trycatch(async (req, res, next) => {
     });
 });
 const getAllQualities = trycatch(async (req, res, next) => {
+  const { s } = req.query;
   await (
     await connection
   )
-    .query("SELECT * FROM qualities;")
+    .query(`SELECT * FROM qualities ${s ? `WHERE name LIKE '%${s}%'` : ``};`)
     .then(([rows]) => {
       return res.status(200).json(rows);
     })
@@ -94,13 +112,11 @@ const getAllQualities = trycatch(async (req, res, next) => {
     });
 });
 const getAllTypes = trycatch(async (req, res, next) => {
-  const { query } = req.query;
+  const { s } = req.query;
   await (
     await connection
   )
-    .query(
-      `SELECT * FROM types WHERE name LIKE '%${query}%' OR description LIKE '%${query}%';`
-    )
+    .query(`SELECT * FROM types ${s ? `WHERE name LIKE '%${s}%'` : ``};`)
     .then(([rows]) => {
       return res.status(200).json(rows);
     })
@@ -110,6 +126,7 @@ const getAllTypes = trycatch(async (req, res, next) => {
 });
 //#endregion
 //#region Insert data to DB
+//! file upload yoxla xetalidi
 const addNewCoin = trycatch(async (req, res, next) => {
   let frontImg = fileUpload(req.files.file1);
   let backImg = fileUpload(req.files.file2);
