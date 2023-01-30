@@ -1,5 +1,5 @@
 import React from "react";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 import DarkModeSwitcher from "../../../../components/DarkMode/DarkModeSwitcher";
 import NavLinks from "./NavLinks";
 import AuthButtons from "./AuthButtons";
@@ -7,8 +7,7 @@ import ProfileButton from "../../../../components/ProfileButton/ProfileButton";
 import { useJwt } from "react-jwt";
 
 export default function NavBar() {
-  const [cookies] = useCookies(["access_token"]);
-  const { decodedToken } = useJwt(cookies.access_token);
+  const { decodedToken } = useJwt(Cookies.get("access_token"));
   return (
     <>
       <nav className='bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900'>

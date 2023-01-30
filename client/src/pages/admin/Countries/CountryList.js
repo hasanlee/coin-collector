@@ -1,25 +1,71 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCoins } from "../../../redux/stores/CoinSlice";
-import { NavLink } from "react-router-dom";
+import {
+  getAllCountries,
+  submitAddCountry,
+  submitEditCountry,
+  submitDeleteCountry,
+} from "../../../redux/stores/CoinSlice";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
-import { Spinner } from "flowbite-react";
-export default function CoinList() {
+import { Spinner, Modal, Button } from "flowbite-react";
+import Input from "../../../components/Input/Input";
+import Dialog from "../../../components/Dialog/Dialog";
+export default function CountryList() {
   const dispatch = useDispatch();
-  const { coins, loading, error } = useSelector((state) => state.coinReducer);
+  const { countries, loading, error, serverResponse } = useSelector(
+    (state) => state.coinReducer
+  );
   const [search, setSearch] = useState("");
-  const deleteHandle = (id, name) => {
-    console.log("ok");
+
+  const [showModal, setShowModal] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+  const [country, setCountry] = useState({});
+  const [mode, setMode] = useState("");
+  const deleteHandle = (id) => {
+    setShowDialog(true);
+    setCountry([...countries].find((com) => com.id === id));
   };
+  const editHandle = (id) => {
+    setMode("EDIT");
+    setShowModal(true);
+    setCountry([...countries].find((com) => com.id === id));
+  };
+  const addHandler = () => {
+    setMode("ADD");
+    setCountry({});
+    setShowModal(true);
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    let formObject = Object.fromEntries(data.entries());
+    const postData = {
+      id: country.id,
+      data: { ...formObject },
+    };
+    if (mode === "EDIT") {
+      dispatch(submitEditCountry(postData));
+    } else if (mode === "ADD") {
+      dispatch(submitAddCountry(formObject));
+    }
+  };
+  const submitDelete = () => {
+    dispatch(submitDeleteCountry(country.id));
+  };
+
   const searchOnTable = (searchText) => {
     setSearch(searchText);
   };
   useEffect(() => {
+    setShowModal(false);
+    setShowDialog(false);
+  }, [serverResponse]);
+  useEffect(() => {
     function fetchData() {
-      dispatch(getAllCoins(search));
+      dispatch(getAllCountries(search));
     }
     fetchData();
-  }, [search]);
+  }, [search, serverResponse]);
   return (
     <>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
@@ -61,30 +107,24 @@ export default function CoinList() {
               ) : null}
             </div>
           </div>
-          <div className='pb-4 bg-white dark:bg-gray-900'>
-            <NavLink
-              to='add/'
-              className='inline-flex gap-3 items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
+          <div className='pb-4 mt-1 bg-white dark:bg-gray-900'>
+            <button
+              onClick={addHandler}
+              className='inline-flex gap-3 items-center p-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
             >
               <FaPlus className='text-green-400' />
               Add new
-            </NavLink>
+            </button>
           </div>
         </div>
         <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
-                Coin name
+                Name
               </th>
               <th scope='col' className='px-6 py-3'>
-                Matal
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Issued Country
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Year
+                Code
               </th>
               <th scope='col' className='px-6 py-3'>
                 Action
@@ -92,35 +132,35 @@ export default function CoinList() {
             </tr>
           </thead>
           <tbody>
-            {coins?.map((coin) => {
+            {countries?.map((country) => {
               return (
                 <tr
-                  key={coin.coinId}
+                  key={country.id}
                   className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
                 >
                   <td
                     scope='row'
                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                   >
-                    {coin.coinName}
+                    {country.name}
                   </td>
-                  <td className='px-6 py-4'>{coin.composition}</td>
-                  <td className='px-6 py-4'>{coin.issuedByCountry}</td>
-                  <td className='px-6 py-4'>{coin.year}</td>
+                  <td className='px-6 py-4'>{country.code}</td>
                   <td className='px-6 py-4'>
                     <div
                       className='inline-flex rounded-md shadow-sm'
                       role='group'
                     >
-                      <NavLink
-                        to={"edit/" + coin.coinId}
+                      <button
+                        onClick={() => {
+                          editHandle(country.id, country.name);
+                        }}
                         className='inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-blue-400 dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
                       >
                         <FaEdit />
-                      </NavLink>
+                      </button>
                       <button
                         onClick={() => {
-                          deleteHandle(coin.coinId, coin.coinName);
+                          deleteHandle(country.id, country.name);
                         }}
                         className='inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-red-400 dark:hover:text-red-500 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
                       >
@@ -134,6 +174,54 @@ export default function CoinList() {
           </tbody>
         </table>
       </div>
+      <Modal
+        show={showModal}
+        size='xl'
+        dismissible={true}
+        onClose={() => {
+          setShowModal(false);
+        }}
+      >
+        <Modal.Header>
+          {mode === "EDIT" ? "Edit : " + country.name : "Add new"}
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={submitHandler}>
+            <Input
+              label='Name'
+              type='text'
+              id='name'
+              name='name'
+              value={country.name}
+              autoComplete='off'
+            />
+            <Input
+              label='Code'
+              type='text'
+              id='code'
+              name='code'
+              value={country.code}
+              autoComplete='off'
+            />
+            <div className='flex justify-end mx-3'>
+              <button className='inline-flex gap-3 items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'>
+                Save
+              </button>
+            </div>
+          </form>
+        </Modal.Body>
+      </Modal>
+      <Dialog
+        show={showDialog}
+        message={"Are you sure delete " + country.name + " ?"}
+        okBtnType='failure'
+        okText='Yes, delete'
+        noText='No, cancel'
+        okClick={submitDelete}
+        noClick={() => {
+          setShowDialog(false);
+        }}
+      />
     </>
   );
 }

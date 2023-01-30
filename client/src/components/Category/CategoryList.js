@@ -13,7 +13,7 @@ export default function CategoryList() {
 
   useEffect(() => {
     function fetchData() {
-      dispatch(getAllCoinTypes(""));
+      dispatch(getAllCoinTypes(query));
     }
     fetchData();
   }, [query]);

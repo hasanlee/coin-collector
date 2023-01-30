@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button } from "flowbite-react";
 import { FaExclamationCircle } from "react-icons/fa";
 
@@ -6,20 +6,23 @@ export default function Dialog({
   show,
   okBtnType,
   okClick,
+  noClick,
+  onClose,
   message,
   okText,
   noText,
 }) {
   const [showDialog, setShowDialog] = useState(show);
+  useEffect(() => {
+    setShowDialog(show);
+  }, [show]);
   return (
     <>
       <Modal
         show={showDialog}
         size='md'
         popup={true}
-        onClose={() => {
-          setShowDialog(false);
-        }}
+        onClose={onClose || noClick}
       >
         <Modal.Header />
         <Modal.Body>
@@ -32,12 +35,7 @@ export default function Dialog({
               <Button color={okBtnType} onClick={okClick}>
                 {okText || "Yes"}
               </Button>
-              <Button
-                color='gray'
-                onClick={() => {
-                  setShowDialog(false);
-                }}
-              >
+              <Button color='gray' onClick={noClick}>
                 {noText || "No"}
               </Button>
             </div>

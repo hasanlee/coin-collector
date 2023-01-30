@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function TextArea({ label, name, id, placeholder, value }) {
   const [text, setText] = useState(value);
+  useEffect(() => {
+    setText(value);
+  }, [value]);
   return (
     <div className='mb-6'>
       <label

@@ -6,6 +6,7 @@ import {
   RiBrush3Line,
   RiAwardLine,
   RiTBoxLine,
+  RiFlagLine,
 } from "react-icons/ri";
 
 export default function SideBar() {
@@ -25,17 +26,22 @@ export default function SideBar() {
               to='/admin/dashboard'
             />
             <SidebarLink name='Coins' icon={<RiCoinLine />} to='/admin/coins' />
-            {/* <SidebarLink
-              name='Compostions'
+            <SidebarLink
+              name='Compositions'
               icon={<RiBrush3Line />}
-              to='/admin/compostions'
+              to='/admin/compositions'
             />
             <SidebarLink name='Types' icon={<RiTBoxLine />} to='/admin/types' />
             <SidebarLink
               name='Qualities'
               icon={<RiAwardLine />}
               to='/admin/qualities'
-            /> */}
+            />
+            <SidebarLink
+              name='Countries'
+              icon={<RiFlagLine />}
+              to='/admin/countries'
+            />
           </ul>
         </div>
       </aside>

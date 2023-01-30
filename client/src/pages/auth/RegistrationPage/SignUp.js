@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { singUp } from "../../../services/coinApi";
-import { showAlert } from "../../../redux/stores/ToggleSlice.js";
+import CustomAlert from "../../../components/Alert/CustomAlert";
+import { signUp } from "../../../redux/stores/AuthSlice";
+
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { authToken, loading, error, success } = useSelector(
+    (state) => state.authReducer
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,28 +22,10 @@ export default function SignUp() {
       email,
       password,
     };
-    await singUp(formData).then((res) => {
-      if (res && res.error) {
-        dispatch(
-          showAlert({
-            head: "Login error",
-            type: "failure",
-            body: res.message,
-            id: Math.random(),
-          })
-        );
-        return;
-      }
-      dispatch(
-        showAlert({
-          head: "Registration",
-          type: "success",
-          body: "Successfully registered.",
-          id: Math.random(),
-        })
-      );
+    dispatch(signUp(formData));
+    if (success) {
       navigate("/login");
-    });
+    }
   };
   return (
     <>
@@ -59,6 +45,13 @@ export default function SignUp() {
             <h5 className='text-xl font-medium text-gray-900 dark:text-white'>
               Sign up to our platform
             </h5>
+            {error ? (
+              <CustomAlert
+                head='Error'
+                message={error.message}
+                type='failure'
+              />
+            ) : null}
             <div>
               <label
                 htmlFor='username'

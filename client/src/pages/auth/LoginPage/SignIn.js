@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import { singIn } from "../../../services/coinApi";
-import { showAlert } from "../../../redux/stores/ToggleSlice.js";
+import { signIn } from "../../../redux/stores/AuthSlice";
+import CustomAlert from "../../../components/Alert/CustomAlert";
+import { Spinner } from "flowbite-react";
+import Cookies from "js-cookie";
+import { useJwt } from "react-jwt";
 
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [cookies, setCookie] = useCookies(["access_token"]);
+  const { authToken, loading, error, success } = useSelector(
+    (state) => state.authReducer
+  );
+  const { decodedToken } = useJwt(Cookies.get("access_token"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loginHandler = async (e) => {
@@ -18,26 +23,14 @@ export default function SignIn() {
       username,
       password,
     };
-    await singIn(formData).then((res) => {
-      if (res && res.error) {
-        dispatch(
-          showAlert({
-            head: "Login error",
-            type: "failure",
-            body: res.message,
-            id: Math.random(),
-          })
-        );
-        return;
-      }
-      setCookie("access_token", res.accessToken, {
-        path: "/",
-        expires: new Date(res.expiredAt),
-      });
-      navigate("/");
-    });
+    dispatch(signIn(formData));
   };
 
+  useEffect(() => {
+    if (decodedToken) {
+      navigate("/");
+    }
+  }, [decodedToken]);
   return (
     <>
       <div className='flex justify-center pt-[10%]'>
@@ -56,6 +49,13 @@ export default function SignIn() {
             <h5 className='text-xl font-medium text-gray-900 dark:text-white'>
               Sign in to our platform
             </h5>
+            {error ? (
+              <CustomAlert
+                head='Error'
+                message={error.message}
+                type='failure'
+              />
+            ) : null}
             <div>
               <label
                 htmlFor='username'
@@ -98,6 +98,9 @@ export default function SignIn() {
               type='submit'
               className='w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
+              {loading ? (
+                <Spinner size='sm' light={true} className='mr-3' />
+              ) : null}
               Login to your account
             </button>
           </form>

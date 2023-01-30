@@ -1,15 +1,14 @@
 import { Avatar, Dropdown } from "flowbite-react";
 import React from "react";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 import { useJwt } from "react-jwt";
 import { NavLink } from "react-router-dom";
 
 export default function ProfileButton() {
-  const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
-  const { decodedToken } = useJwt(cookies.access_token);
+  const { decodedToken } = useJwt(Cookies.get("access_token"));
   const user = { ...decodedToken };
   const handleSignOut = () => {
-    removeCookie("access_token", { path: "/", domain: "localhost" });
+    Cookies.remove("access_token", { path: "" });
   };
   return (
     <>

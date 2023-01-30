@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../utils/axiosInstance";
 const initialState = {
   loading: false,
-  error: {},
+  serverResponse: null,
+  error: null,
   modalState: false,
   coinDetail: {},
   types: [],
@@ -13,48 +14,84 @@ const initialState = {
   coin: {},
 };
 
-export const getAllCoins = createAsyncThunk("getAllCoins", async (query) => {
-  const response = await axios.get(
-    process.env.REACT_APP_API_URL + "/allcoins?query=" + query
-  );
-  return response.data;
-});
+export const getAllCoins = createAsyncThunk(
+  "getAllCoins",
+  async (query, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/allcoins?query=" + query);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 export const getAllCoinTypes = createAsyncThunk(
   "getAllCoinTypes",
-  async (query) => {
-    const response = await axios.get(
-      process.env.REACT_APP_API_URL + "/types?query=" + query
-    );
-    return response.data;
+  async (query, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/types?query=" + query);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   }
 );
-export const getAllCountries = createAsyncThunk("getAllCountries", async () => {
-  const response = await axios.get(
-    process.env.REACT_APP_API_URL + "/countries"
-  );
-  return response.data;
-});
+export const getAllCountries = createAsyncThunk(
+  "getAllCountries",
+  async (query, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/countries/");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 export const getAllCompositions = createAsyncThunk(
   "getAllCompositions",
-  async () => {
-    const response = await axios.get(
-      process.env.REACT_APP_API_URL + "/compositions"
-    );
-    return response.data;
+  async (query, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/compositions/");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   }
 );
-export const getAllQualities = createAsyncThunk("getAllQualities", async () => {
-  const response = await axios.get(
-    process.env.REACT_APP_API_URL + "/qualities"
-  );
-  return response.data;
-});
-export const getCoinById = createAsyncThunk("getCoinById", async (id) => {
-  const response = await axios.get(
-    process.env.REACT_APP_API_URL + "/coins/" + id
-  );
-  return response.data;
-});
+export const getAllQualities = createAsyncThunk(
+  "getAllQualities",
+  async (query, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/qualities/");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const getCoinById = createAsyncThunk(
+  "getCoinById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/coins/" + id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+//Coin methods
+export const submitAddCoin = createAsyncThunk(
+  "submitAddCoin",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/admin/coin/", data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 export const submitEditCoin = createAsyncThunk(
   "submitEditCoin",
   async ({ id, data }, { rejectWithValue }) => {
@@ -78,6 +115,142 @@ export const submitDeleteCoin = createAsyncThunk(
     }
   }
 );
+//Composition methods
+export const submitAddComposition = createAsyncThunk(
+  "submitAddComposition",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/admin/composition/", data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitEditComposition = createAsyncThunk(
+  "submitEditComposition",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put("/admin/composition/" + id, data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitDeleteComposition = createAsyncThunk(
+  "submitDeleteComposition",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete("/admin/composition/" + id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+//Country methods
+export const submitAddCountry = createAsyncThunk(
+  "submitAddCountry",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/admin/country/", data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitEditCountry = createAsyncThunk(
+  "submitEditCountry",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put("/admin/country/" + id, data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitDeleteCountry = createAsyncThunk(
+  "submitDeleteCountry",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete("/admin/country/" + id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+//Quality methods
+export const submitAddQuality = createAsyncThunk(
+  "submitAddQuality",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/admin/quality/", data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitEditQuality = createAsyncThunk(
+  "submitEditQuality",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put("/admin/quality/" + id, data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitDeleteQuality = createAsyncThunk(
+  "submitDeleteQuality",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete("/admin/quality/" + id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+//Type methods
+export const submitAddType = createAsyncThunk(
+  "submitAddType",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/admin/type/", data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitEditType = createAsyncThunk(
+  "submitEditType",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put("/admin/type/" + id, data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const submitDeleteType = createAsyncThunk(
+  "submitDeleteType",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete("/admin/type/" + id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 const coinReducer = createSlice({
   name: "coinReducer",
@@ -94,7 +267,7 @@ const coinReducer = createSlice({
     //#region getCoins
     builder.addCase(getAllCoins.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
     });
     builder.addCase(getAllCoins.fulfilled, (state, action) => {
       state.coins = action.payload;
@@ -109,7 +282,7 @@ const coinReducer = createSlice({
     //#region getTypes
     builder.addCase(getAllCoinTypes.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
     });
     builder.addCase(getAllCoinTypes.fulfilled, (state, action) => {
       state.types = action.payload;
@@ -123,7 +296,7 @@ const coinReducer = createSlice({
     //#region getCountries
     builder.addCase(getAllCountries.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
     });
     builder.addCase(getAllCountries.fulfilled, (state, action) => {
       state.countries = action.payload;
@@ -137,7 +310,7 @@ const coinReducer = createSlice({
     //#region getQualities
     builder.addCase(getAllQualities.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
     });
     builder.addCase(getAllQualities.fulfilled, (state, action) => {
       state.qualities = action.payload;
@@ -151,7 +324,7 @@ const coinReducer = createSlice({
     //#region getCompostions
     builder.addCase(getAllCompositions.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
     });
     builder.addCase(getAllCompositions.fulfilled, (state, action) => {
       state.compositions = action.payload;
@@ -165,7 +338,7 @@ const coinReducer = createSlice({
     //#region getCoinById
     builder.addCase(getCoinById.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
     });
     builder.addCase(getCoinById.fulfilled, (state, action) => {
       state.coin = action.payload;
@@ -202,6 +375,185 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitDeleteCoin.rejected, (state, action) => {
       console.log(action);
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region addCoin
+    builder.addCase(submitAddCoin.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+    });
+    builder.addCase(submitAddCoin.fulfilled, (state, action) => {
+      state.coin = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitAddCoin.rejected, (state, action) => {
+      console.log(action);
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region Composition
+    builder.addCase(submitAddComposition.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitAddComposition.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitAddComposition.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(submitEditComposition.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitEditComposition.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitEditComposition.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(submitDeleteComposition.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitDeleteComposition.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitDeleteComposition.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region Country
+    builder.addCase(submitAddCountry.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitAddCountry.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitAddCountry.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(submitEditCountry.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitEditCountry.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitEditCountry.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(submitDeleteCountry.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitDeleteCountry.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitDeleteCountry.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region Quality
+    builder.addCase(submitAddQuality.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitAddQuality.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitAddQuality.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(submitEditQuality.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitEditQuality.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitEditQuality.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(submitDeleteQuality.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitDeleteQuality.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitDeleteQuality.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region Type
+    builder.addCase(submitAddType.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitAddType.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitAddType.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(submitEditType.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitEditType.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitEditType.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(submitDeleteType.pending, (state, action) => {
+      state.loading = true;
+      state.error = "";
+      state.serverResponse = null;
+    });
+    builder.addCase(submitDeleteType.fulfilled, (state, action) => {
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(submitDeleteType.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

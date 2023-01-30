@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function SelectBox({ label, name, id, options, value }) {
   const [selectValue, setSelectValue] = useState(value);
+  useEffect(() => {
+    setSelectValue(value);
+  }, [value]);
   return (
     <div className='mb-6'>
       <label
