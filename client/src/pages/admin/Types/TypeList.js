@@ -49,24 +49,27 @@ export default function TypeList() {
     } else if (mode === "ADD") {
       dispatch(submitAddType(formObject));
     }
+    reloadData();
   };
   const submitDelete = () => {
     dispatch(submitDeleteType(type.id));
+    reloadData();
   };
 
   const searchOnTable = (searchText) => {
     setSearch(searchText);
   };
+  const reloadData = () => {
+    dispatch(getAllCoinTypes(search));
+  };
   useEffect(() => {
     setShowModal(false);
     setShowDialog(false);
   }, [serverResponse]);
+
   useEffect(() => {
-    function fetchData() {
-      dispatch(getAllCoinTypes(search));
-    }
-    fetchData();
-  }, [search, serverResponse]);
+    reloadData();
+  }, [search]);
   return (
     <>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>

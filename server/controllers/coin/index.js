@@ -275,7 +275,7 @@ const deleteCoin = trycatch(async (req, res, next) => {
     await connection
   )
     .query(
-      "SELECT * FROM coins WHERE id=?; UPDATE coins SET 'deleted'=1 WHERE id=? ",
+      "SELECT * FROM coins WHERE id=?; UPDATE coins SET deleted=1 WHERE id=? ",
       [req.params.id, req.params.id]
     )
     .then(([data]) => {

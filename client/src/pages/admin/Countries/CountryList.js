@@ -48,24 +48,29 @@ export default function CountryList() {
     } else if (mode === "ADD") {
       dispatch(submitAddCountry(formObject));
     }
+    reloadData();
   };
   const submitDelete = () => {
     dispatch(submitDeleteCountry(country.id));
+    reloadData();
   };
 
   const searchOnTable = (searchText) => {
     setSearch(searchText);
   };
+
+  const reloadData = () => {
+    dispatch(getAllCountries(search));
+  };
+
   useEffect(() => {
     setShowModal(false);
     setShowDialog(false);
   }, [serverResponse]);
+
   useEffect(() => {
-    function fetchData() {
-      dispatch(getAllCountries(search));
-    }
-    fetchData();
-  }, [search, serverResponse]);
+    reloadData();
+  }, [search]);
   return (
     <>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>

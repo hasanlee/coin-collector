@@ -49,23 +49,26 @@ export default function QualityList() {
     } else if (mode === "ADD") {
       dispatch(submitAddQuality(formObject));
     }
+    reloadData();
   };
   const submitDelete = () => {
     dispatch(submitDeleteQuality(quality.id));
+    reloadData();
   };
   const searchOnTable = (searchText) => {
     setSearch(searchText);
+  };
+  const reloadData = () => {
+    dispatch(getAllQualities(search));
   };
   useEffect(() => {
     setShowModal(false);
     setShowDialog(false);
   }, [serverResponse]);
+
   useEffect(() => {
-    function fetchData() {
-      dispatch(getAllQualities(search));
-    }
-    fetchData();
-  }, [search, serverResponse]);
+    reloadData();
+  }, [search]);
   return (
     <>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>

@@ -1,24 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCoins } from "../../../redux/stores/CoinSlice";
+import { getAllCoins, submitDeleteCoin } from "../../../redux/stores/CoinSlice";
 import { NavLink } from "react-router-dom";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
 import { Spinner } from "flowbite-react";
+import Dialog from "../../../components/Dialog/Dialog";
 export default function CoinList() {
   const dispatch = useDispatch();
-  const { coins, loading, error } = useSelector((state) => state.coinReducer);
+  const { coins, loading, error, serverResponse } = useSelector(
+    (state) => state.coinReducer
+  );
   const [search, setSearch] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
+  const [coin, setCoin] = useState({});
   const deleteHandle = (id, name) => {
-    console.log("ok");
+    setShowDialog(true);
+    setCoin([...coins].find(({ coinId }) => coinId === id));
   };
+
+  const submitDelete = () => {
+    console.log(coin);
+    dispatch(submitDeleteCoin(coin.coinId));
+    reloadData();
+  };
+
   const searchOnTable = (searchText) => {
     setSearch(searchText);
   };
+  const reloadData = () => {
+    dispatch(getAllCoins(search));
+  };
+
   useEffect(() => {
-    function fetchData() {
-      dispatch(getAllCoins(search));
-    }
-    fetchData();
+    setShowDialog(false);
+  }, [serverResponse]);
+
+  useEffect(() => {
+    reloadData();
   }, [search]);
   return (
     <>
@@ -61,7 +79,7 @@ export default function CoinList() {
               ) : null}
             </div>
           </div>
-          <div className='pb-4 bg-white dark:bg-gray-900'>
+          <div className='pb-4 mt-1 bg-white dark:bg-gray-900'>
             <NavLink
               to='add/'
               className='inline-flex gap-3 items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
@@ -134,6 +152,17 @@ export default function CoinList() {
           </tbody>
         </table>
       </div>
+      <Dialog
+        show={showDialog}
+        message={`Are you sure delete ` + coin.coinName + " ?"}
+        okBtnType='failure'
+        okText='Yes, delete'
+        noText='No, cancel'
+        noClick={() => {
+          setShowDialog(false);
+        }}
+        okClick={submitDelete}
+      />
     </>
   );
 }

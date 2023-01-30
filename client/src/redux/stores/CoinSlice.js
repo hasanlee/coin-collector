@@ -18,7 +18,7 @@ export const getAllCoins = createAsyncThunk(
   "getAllCoins",
   async (query, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/allcoins?query=" + query);
+      const response = await axios.get("/allcoins?s=" + query);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -29,7 +29,7 @@ export const getAllCoinTypes = createAsyncThunk(
   "getAllCoinTypes",
   async (query, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/types?query=" + query);
+      const response = await axios.get("/types?s=" + query);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -40,7 +40,7 @@ export const getAllCountries = createAsyncThunk(
   "getAllCountries",
   async (query, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/countries/");
+      const response = await axios.get("/countries?s=" + query);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -51,7 +51,7 @@ export const getAllCompositions = createAsyncThunk(
   "getAllCompositions",
   async (query, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/compositions/");
+      const response = await axios.get("/compositions?s=" + query);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -62,7 +62,7 @@ export const getAllQualities = createAsyncThunk(
   "getAllQualities",
   async (query, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/qualities/");
+      const response = await axios.get("/qualities?s=" + query);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

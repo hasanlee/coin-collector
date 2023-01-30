@@ -48,24 +48,29 @@ export default function CompositionList() {
     } else if (mode === "ADD") {
       dispatch(submitAddComposition(formObject));
     }
+    reloadData();
   };
   const submitDelete = () => {
     dispatch(submitDeleteComposition(composition.id));
+    reloadData();
   };
 
   const searchOnTable = (searchText) => {
     setSearch(searchText);
   };
+
+  const reloadData = () => {
+    dispatch(getAllCompositions(search));
+  };
+
   useEffect(() => {
     setShowModal(false);
     setShowDialog(false);
   }, [serverResponse]);
+
   useEffect(() => {
-    function fetchData() {
-      dispatch(getAllCompositions(search));
-    }
-    fetchData();
-  }, [search, serverResponse]);
+    reloadData();
+  }, [search]);
   return (
     <>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
