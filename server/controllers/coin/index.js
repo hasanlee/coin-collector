@@ -128,14 +128,18 @@ const getAllTypes = trycatch(async (req, res, next) => {
 //#region Insert data to DB
 //! file upload yoxla xetalidi
 const addNewCoin = trycatch(async (req, res, next) => {
-  let frontImg = fileUpload(req.files.file1);
-  let backImg = fileUpload(req.files.file2);
+  let frontImg = req.files?.file1 ? fileUpload(req.files.file1) : null;
+  let backImg = req.files?.file2 ? fileUpload(req.files.file2) : null;
   const data = {
     ...req.body,
     created_by: req.user.id,
-    imageUrl_front: frontImg,
-    imageUrl_back: backImg,
   };
+  if (frontImg) {
+    data.imageUrl_front = frontImg;
+  }
+  if (backImg) {
+    data.imageUrl_back = backImg;
+  }
   await (
     await connection
   )
@@ -199,16 +203,19 @@ const addNewType = trycatch(async (req, res, next) => {
 //#region Update
 //! file upload yoxla xetalidi
 const updateCoin = trycatch(async (req, res, next) => {
-  console.log(req.files);
-  let frontImg = req.files ? fileUpload(req.files.file1) : "";
-  let backImg = req.files ? fileUpload(req.files.file2) : "";
+  let frontImg = req.files?.file1 ? fileUpload(req.files.file1) : null;
+  let backImg = req.files?.file2 ? fileUpload(req.files.file2) : null;
   const data = {
     ...req.body,
     updated_by: req.user.id,
     //updated_at: "",
-    imageUrl_front: frontImg,
-    imageUrl_back: backImg,
   };
+  if (frontImg) {
+    data.imageUrl_front = frontImg;
+  }
+  if (backImg) {
+    data.imageUrl_back = backImg;
+  }
   await (
     await connection
   )

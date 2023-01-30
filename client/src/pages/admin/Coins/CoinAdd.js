@@ -3,6 +3,7 @@ import Input from "../../../components/Input/Input";
 import InputFile from "../../../components/Input/InputFile";
 import SelectBox from "../../../components/Input/SelectBox";
 import TextArea from "../../../components/Input/TextArea";
+import OverlayLoading from "../../../components/LoadingSpinner/OverlayLoading";
 import { FaDollarSign } from "react-icons/fa";
 import CountrySelector from "../../../components/Input/CountrySelector";
 import {
@@ -13,7 +14,8 @@ import {
   submitAddCoin,
 } from "../../../redux/stores/CoinSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import CustomToast from "../../../components/Toast/CustomToast";
 
 export default function CoinAdd() {
   const {
@@ -29,15 +31,17 @@ export default function CoinAdd() {
   const submitHandler = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    let formObject = Object.fromEntries(data.entries());
-    dispatch(submitAddCoin(formObject));
+    dispatch(submitAddCoin(data));
   };
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/admin/coins");
+  }, [serverResponse]);
   useEffect(() => {
     function fetchData() {
-      dispatch(getAllCountries());
-      dispatch(getAllCompositions());
-      dispatch(getAllQualities());
+      dispatch(getAllCountries(""));
+      dispatch(getAllCompositions(""));
+      dispatch(getAllQualities(""));
       dispatch(getAllCoinTypes(""));
     }
     fetchData();
@@ -45,6 +49,10 @@ export default function CoinAdd() {
 
   return (
     <>
+      {loading ? <OverlayLoading /> : null}
+      {error ? (
+        <CustomToast type='failure' message={error?.message} show={false} />
+      ) : null}
       <form onSubmit={submitHandler}>
         <div className='flex flex-col gap-5'>
           <div className='grid lg:grid-cols-8 gap-5 md:grid-cols-8 grid-cols-1'>
@@ -75,8 +83,8 @@ export default function CoinAdd() {
                 icon={<FaDollarSign />}
               />
               <CountrySelector
-                name='issued_countryId'
-                id='issued_countryId'
+                name='issued_countryCode'
+                id='issued_countryCode'
                 label='Country'
                 countries={countries}
               />

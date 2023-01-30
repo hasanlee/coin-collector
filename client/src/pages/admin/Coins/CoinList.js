@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
 import { Spinner } from "flowbite-react";
 import Dialog from "../../../components/Dialog/Dialog";
+import CustomToast from "../../../components/Toast/CustomToast";
+
 export default function CoinList() {
   const dispatch = useDispatch();
   const { coins, loading, error, serverResponse } = useSelector(
@@ -19,7 +21,6 @@ export default function CoinList() {
   };
 
   const submitDelete = () => {
-    console.log(coin);
     dispatch(submitDeleteCoin(coin.coinId));
     reloadData();
   };
@@ -40,6 +41,9 @@ export default function CoinList() {
   }, [search]);
   return (
     <>
+      {error ? (
+        <CustomToast type='failure' message={error?.message} show={false} />
+      ) : null}
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
         <div className='flex justify-between'>
           <div className='pb-4 bg-white dark:bg-gray-900'>

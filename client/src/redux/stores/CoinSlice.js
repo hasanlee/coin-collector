@@ -84,7 +84,6 @@ export const getCoinById = createAsyncThunk(
 export const submitAddCoin = createAsyncThunk(
   "submitAddCoin",
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
       const response = await axios.post("/admin/coin/", data);
       return response.data;
@@ -96,7 +95,6 @@ export const submitAddCoin = createAsyncThunk(
 export const submitEditCoin = createAsyncThunk(
   "submitEditCoin",
   async ({ id, data }, { rejectWithValue }) => {
-    console.log(id, data);
     try {
       const response = await axios.put("/admin/coin/" + id, data);
       return response.data;

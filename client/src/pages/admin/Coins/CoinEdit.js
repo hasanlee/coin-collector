@@ -15,11 +15,20 @@ import {
   submitEditCoin,
 } from "../../../redux/stores/CoinSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import CustomToast from "../../../components/Toast/CustomToast";
 
 export default function CoinEdit() {
-  const { types, compositions, qualities, countries, coin, loading, error } =
-    useSelector((state) => state.coinReducer);
+  const {
+    types,
+    compositions,
+    qualities,
+    countries,
+    coin,
+    loading,
+    error,
+    serverResponse,
+  } = useSelector((state) => state.coinReducer);
   const {
     id: coinId,
     name: coinName,
@@ -41,19 +50,23 @@ export default function CoinEdit() {
   const submitHandler = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    let formObject = Object.fromEntries(data.entries());
     const postData = {
       id,
-      data: formObject,
+      data: data,
     };
     dispatch(submitEditCoin(postData));
   };
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/admin/coins");
+  }, [serverResponse]);
+
   useEffect(() => {
     function fetchData() {
-      dispatch(getAllCountries());
-      dispatch(getAllCompositions());
-      dispatch(getAllQualities());
+      dispatch(getAllCountries(""));
+      dispatch(getAllCompositions(""));
+      dispatch(getAllQualities(""));
       dispatch(getAllCoinTypes(""));
       dispatch(getCoinById(id));
     }
@@ -63,7 +76,9 @@ export default function CoinEdit() {
   return (
     <>
       {loading ? <OverlayLoading /> : null}
-      {error ? error.message : null}
+      {error ? (
+        <CustomToast type='failure' message={error?.message} show={false} />
+      ) : null}
       <form onSubmit={submitHandler} encType='multipart/form-data'>
         <div className='flex flex-col gap-5'>
           <div className='grid lg:grid-cols-8 gap-5 md:grid-cols-8 grid-cols-1'>
@@ -171,7 +186,8 @@ export default function CoinEdit() {
                 id='file1'
                 placeholder='Front Image'
                 label={"Click to upload or drag and drop"}
-                value={faceImage}
+                imgHolder={faceImage}
+                name='file1'
               />
             </div>
             <div className='col-span-1 md:col-span-4 lg-col-span-4 flex flex-col'>
@@ -179,7 +195,8 @@ export default function CoinEdit() {
                 id='file2'
                 placeholder='Back Image'
                 label={"Click to upload or drag and drop"}
-                value={backImage}
+                imgHolder={backImage}
+                name='file2'
               />
             </div>
           </div>
@@ -188,7 +205,7 @@ export default function CoinEdit() {
               to='/admin/coins'
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
-              Back list
+              Back
             </NavLink>
             <button
               type='submit'
