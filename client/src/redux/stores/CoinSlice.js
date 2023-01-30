@@ -84,6 +84,7 @@ export const getCoinById = createAsyncThunk(
 export const submitAddCoin = createAsyncThunk(
   "submitAddCoin",
   async (data, { rejectWithValue }) => {
+    console.log(data);
     try {
       const response = await axios.post("/admin/coin/", data);
       return response.data;
@@ -268,9 +269,11 @@ const coinReducer = createSlice({
     builder.addCase(getAllCoins.pending, (state, action) => {
       state.loading = true;
       state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(getAllCoins.fulfilled, (state, action) => {
       state.coins = action.payload;
+      state.serverResponse = action.payload;
       state.loading = false;
     });
     builder.addCase(getAllCoins.rejected, (state, action) => {
@@ -283,10 +286,12 @@ const coinReducer = createSlice({
     builder.addCase(getAllCoinTypes.pending, (state, action) => {
       state.loading = true;
       state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(getAllCoinTypes.fulfilled, (state, action) => {
       state.types = action.payload;
       state.loading = false;
+      state.serverResponse = action.payload;
     });
     builder.addCase(getAllCoinTypes.rejected, (state, action) => {
       state.loading = false;
@@ -297,10 +302,12 @@ const coinReducer = createSlice({
     builder.addCase(getAllCountries.pending, (state, action) => {
       state.loading = true;
       state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(getAllCountries.fulfilled, (state, action) => {
       state.countries = action.payload;
       state.loading = false;
+      state.serverResponse = action.payload;
     });
     builder.addCase(getAllCountries.rejected, (state, action) => {
       state.loading = false;
@@ -311,10 +318,12 @@ const coinReducer = createSlice({
     builder.addCase(getAllQualities.pending, (state, action) => {
       state.loading = true;
       state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(getAllQualities.fulfilled, (state, action) => {
       state.qualities = action.payload;
       state.loading = false;
+      state.serverResponse = action.payload;
     });
     builder.addCase(getAllQualities.rejected, (state, action) => {
       state.loading = false;
@@ -325,10 +334,12 @@ const coinReducer = createSlice({
     builder.addCase(getAllCompositions.pending, (state, action) => {
       state.loading = true;
       state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(getAllCompositions.fulfilled, (state, action) => {
       state.compositions = action.payload;
       state.loading = false;
+      state.serverResponse = action.payload;
     });
     builder.addCase(getAllCompositions.rejected, (state, action) => {
       state.loading = false;
@@ -339,10 +350,12 @@ const coinReducer = createSlice({
     builder.addCase(getCoinById.pending, (state, action) => {
       state.loading = true;
       state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(getCoinById.fulfilled, (state, action) => {
       state.coin = action.payload;
       state.loading = false;
+      state.serverResponse = action.payload;
     });
     builder.addCase(getCoinById.rejected, (state, action) => {
       state.loading = false;
@@ -352,14 +365,15 @@ const coinReducer = createSlice({
     //#region editCoin
     builder.addCase(submitEditCoin.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(submitEditCoin.fulfilled, (state, action) => {
       state.coin = action.payload;
       state.loading = false;
+      state.serverResponse = action.payload;
     });
     builder.addCase(submitEditCoin.rejected, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.error = action.payload;
     });
@@ -367,14 +381,15 @@ const coinReducer = createSlice({
     //#region deleteCoin
     builder.addCase(submitDeleteCoin.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(submitDeleteCoin.fulfilled, (state, action) => {
       state.coin = action.payload;
       state.loading = false;
+      state.serverResponse = action.payload;
     });
     builder.addCase(submitDeleteCoin.rejected, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.error = action.payload;
     });
@@ -382,14 +397,15 @@ const coinReducer = createSlice({
     //#region addCoin
     builder.addCase(submitAddCoin.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
+      state.serverResponse = null;
     });
     builder.addCase(submitAddCoin.fulfilled, (state, action) => {
       state.coin = action.payload;
       state.loading = false;
+      state.serverResponse = action.payload;
     });
     builder.addCase(submitAddCoin.rejected, (state, action) => {
-      console.log(action);
       state.loading = false;
       state.error = action.payload;
     });
@@ -397,7 +413,7 @@ const coinReducer = createSlice({
     //#region Composition
     builder.addCase(submitAddComposition.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitAddComposition.fulfilled, (state, action) => {
@@ -410,7 +426,7 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitEditComposition.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitEditComposition.fulfilled, (state, action) => {
@@ -423,7 +439,7 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitDeleteComposition.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitDeleteComposition.fulfilled, (state, action) => {
@@ -438,7 +454,7 @@ const coinReducer = createSlice({
     //#region Country
     builder.addCase(submitAddCountry.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitAddCountry.fulfilled, (state, action) => {
@@ -451,7 +467,7 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitEditCountry.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitEditCountry.fulfilled, (state, action) => {
@@ -464,7 +480,7 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitDeleteCountry.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitDeleteCountry.fulfilled, (state, action) => {
@@ -479,7 +495,7 @@ const coinReducer = createSlice({
     //#region Quality
     builder.addCase(submitAddQuality.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitAddQuality.fulfilled, (state, action) => {
@@ -492,7 +508,7 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitEditQuality.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitEditQuality.fulfilled, (state, action) => {
@@ -505,7 +521,7 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitDeleteQuality.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitDeleteQuality.fulfilled, (state, action) => {
@@ -520,7 +536,7 @@ const coinReducer = createSlice({
     //#region Type
     builder.addCase(submitAddType.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitAddType.fulfilled, (state, action) => {
@@ -533,7 +549,7 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitEditType.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitEditType.fulfilled, (state, action) => {
@@ -546,7 +562,7 @@ const coinReducer = createSlice({
     });
     builder.addCase(submitDeleteType.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = null;
       state.serverResponse = null;
     });
     builder.addCase(submitDeleteType.fulfilled, (state, action) => {

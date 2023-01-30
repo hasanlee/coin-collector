@@ -10,19 +10,27 @@ import {
   getAllCoinTypes,
   getAllCompositions,
   getAllQualities,
+  submitAddCoin,
 } from "../../../redux/stores/CoinSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 export default function CoinAdd() {
-  const { types, compositions, qualities, countries, loadin, error } =
-    useSelector((state) => state.coinReducer);
+  const {
+    types,
+    compositions,
+    qualities,
+    countries,
+    loading,
+    error,
+    serverResponse,
+  } = useSelector((state) => state.coinReducer);
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     let formObject = Object.fromEntries(data.entries());
-    console.log(formObject);
+    dispatch(submitAddCoin(formObject));
   };
 
   useEffect(() => {
