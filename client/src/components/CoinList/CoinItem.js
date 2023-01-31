@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import CustomCarousel from "../Carousel/CustomCarousel";
 import { Badge, Tooltip } from "flowbite-react";
 import { FaEye, FaStar, FaHeart } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { viewCoinDetail } from "../../redux/stores/CoinSlice";
 import { toggleModal } from "../../redux/stores/ToggleSlice";
 export default function CoinItem({ coin }) {

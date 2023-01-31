@@ -7,7 +7,7 @@ export default function MainPage() {
   return (
     <>
       <Header />
-      <main className='flex flex-col items-center w-full'>
+      <main className='flex flex-col items-center '>
         <div className='w-96 m-2'>
           <SearchBar />
         </div>

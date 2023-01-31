@@ -1,6 +1,7 @@
 const { connection } = require("../../db");
 const { trycatch } = require("../../utils/trycatch");
 const { fileUpload } = require("../../utils/fileUpload");
+const moment = require("moment");
 
 //const funcTemplate = trycatch(async (req, res, next) => {});
 //TODO: Geri gonderilen melumatlar ucun base class hazirla
@@ -126,7 +127,6 @@ const getAllTypes = trycatch(async (req, res, next) => {
 });
 //#endregion
 //#region Insert data to DB
-//! file upload yoxla xetalidi
 const addNewCoin = trycatch(async (req, res, next) => {
   let frontImg = req.files?.file1 ? fileUpload(req.files.file1) : null;
   let backImg = req.files?.file2 ? fileUpload(req.files.file2) : null;
@@ -201,14 +201,13 @@ const addNewType = trycatch(async (req, res, next) => {
 });
 //#endregion
 //#region Update
-//! file upload yoxla xetalidi
 const updateCoin = trycatch(async (req, res, next) => {
   let frontImg = req.files?.file1 ? fileUpload(req.files.file1) : null;
   let backImg = req.files?.file2 ? fileUpload(req.files.file2) : null;
   const data = {
     ...req.body,
     updated_by: req.user.id,
-    //updated_at: "",
+    updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
   };
   if (frontImg) {
     data.imageUrl_front = frontImg;

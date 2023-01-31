@@ -1,51 +1,81 @@
-import { Avatar, Dropdown } from "flowbite-react";
-import React from "react";
+import { Avatar } from "flowbite-react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { useJwt } from "react-jwt";
-import { NavLink } from "react-router-dom";
+import { decodeToken } from "react-jwt";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function ProfileButton() {
-  const { decodedToken } = useJwt(Cookies.get("access_token"));
+  const decodedToken = decodeToken(Cookies.get("access_token"));
+  const navigate = useNavigate();
   const user = { ...decodedToken };
   const handleSignOut = () => {
-    Cookies.remove("access_token", { path: "" });
+    console.log("sign out");
+    Cookies.remove("access_token", { path: "/" });
+    if (!decodedToken) {
+      navigate("/");
+    }
   };
+  const [openMenu, setOpenMenu] = useState(false);
   return (
     <>
-      <div className='flex md:order-2'>
-        <Dropdown
-          arrowIcon={false}
-          inline={true}
-          label={
-            <Avatar
-              alt={user.username}
-              img={user.avatarId || ""}
-              rounded={true}
-            />
-          }
+      <div>
+        <button
+          type='button'
+          onClick={() => {
+            setOpenMenu(!openMenu);
+          }}
+          className='flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600'
+          id='user-menu-button'
+          aria-expanded='false'
+          data-dropdown-placement='bottom'
         >
-          <Dropdown.Header>
-            <span className='block text-sm'>
-              {user.fullname || user.username}
-            </span>
-            <span className='block truncate text-sm font-medium'>
-              {user.email}
-            </span>
-          </Dropdown.Header>
-          {user.roleId === 1 ? (
-            <Dropdown.Item>
-              <NavLink to='/admin/dashboard'>Admin Dashboard</NavLink>
-            </Dropdown.Item>
-          ) : null}
-          <Dropdown.Item>
-            <NavLink to='/profile'>Profile</NavLink>
-          </Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item>
-            <button onClick={handleSignOut}>Sign out</button>
-          </Dropdown.Item>
-        </Dropdown>
-        {/* <Navbar.Toggle /> */}
+          <span className='sr-only'>Open user menu</span>
+          <Avatar
+            alt={user.username}
+            img={user.avatarId || ""}
+            rounded={true}
+          />
+        </button>
+        {openMenu ? (
+          <div className='absolute z-50  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600'>
+            <div className='px-4 py-3'>
+              <span className='block text-sm text-gray-900 dark:text-white'>
+                {user.fullname || user.username}
+              </span>
+              <span className='block text-sm font-medium text-gray-500 truncate dark:text-gray-400'>
+                {user.email}
+              </span>
+            </div>
+            <ul className='py-2' aria-labelledby='user-menu-button'>
+              {user.roleId === 1 ? (
+                <li>
+                  <NavLink
+                    className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                    to='/admin/dashboard'
+                  >
+                    Admin Dashboard
+                  </NavLink>
+                </li>
+              ) : null}
+              <li>
+                <NavLink
+                  className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                  to='/profile'
+                >
+                  Profile
+                </NavLink>
+              </li>
+              <li>
+                <button
+                  className='block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                  onClick={handleSignOut}
+                >
+                  Sign out
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : null}
       </div>
     </>
   );

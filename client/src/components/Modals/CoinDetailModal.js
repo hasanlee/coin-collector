@@ -45,21 +45,23 @@ export default function CoinDetailModal() {
         <Modal.Header>{coinName}</Modal.Header>
         <Modal.Body>
           <div className='grid lg:grid-cols-4 gap-5 md:grid-cols-1 sm:grid-cols-1'>
-            <div className='lg:col-span-1 flex lg:flex-col gap-12 md:flex-row md:justify-between sm:flex-row sm:justify-between'>
-              <Avatar img={faceImage} rounded={true} size='xl' />
-              <Avatar img={backImage} rounded={true} size='xl' />
+            <div className='lg:col-span-1 md:col-span-1 sm:col-span-1 flex lg:flex-col lg:gap-12 md:gap-6 md:flex-col md:justify-between sm:flex-col flex-col gap-5'>
+              <div className='flex flex-row lg:flex-col lg:gap-12 md:flex-row sm:flex-row justify-around'>
+                <Avatar img={faceImage} rounded={true} size='xl' />
+                <Avatar img={backImage} rounded={true} size='xl' />
+              </div>
               <UserActions
                 view_count={viewCount}
                 favorite_count={favoriteCount}
                 like_count={likeCount}
               />
             </div>
-            <div className='lg:col-span-3 flex flex-col gap-8'>
+            <div className='lg:col-span-3 md:col-span-1 sm:col-span-1 flex flex-col gap-8'>
               <div className='flex flex-col gap-8'>
-                <p className='font-normal text-gray-700 dark:text-gray-400 md:text-sm sm:text-sm'>
+                <p className='font-normal text-gray-700 dark:text-gray-400 md:text-sm sm:text-sm text-ellipsis'>
                   {shortDescription}
                 </p>
-                <p className='font-normal text-gray-700 dark:text-gray-400 lg:text-base text-sm'>
+                <p className='font-normal text-gray-700 dark:text-gray-400 lg:text-base text-sm text-ellipsis'>
                   {description}
                 </p>
               </div>

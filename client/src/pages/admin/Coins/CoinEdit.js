@@ -58,9 +58,6 @@ export default function CoinEdit() {
   };
 
   const navigate = useNavigate();
-  useEffect(() => {
-    navigate("/admin/coins");
-  }, [serverResponse]);
 
   useEffect(() => {
     function fetchData() {

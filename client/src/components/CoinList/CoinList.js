@@ -6,7 +6,6 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useParams } from "react-router-dom";
 import { getAllCoins } from "../../redux/stores/CoinSlice";
 import OverlayLoading from "../LoadingSpinner/OverlayLoading";
-import CustomAlert from "../Alert/CustomAlert";
 
 export default function CoinList() {
   const dispatch = useDispatch();

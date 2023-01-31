@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Action } from "@remix-run/router";
 
 const initialState = {
   darkMode: JSON.parse(localStorage.getItem("darkMode")) || false,

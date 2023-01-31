@@ -8,10 +8,10 @@ export default function UserActions({
 }) {
   return (
     <>
-      <div className='w-48'>
-        <ListGroup>
+      <div className=''>
+        <ListGroup className='flex lg:flex-col md:flex-row sm:flex-row justify-around'>
           <ListGroup.Item disabled={true}>
-            <span className='flex gap-2 items-center'>
+            <span className='flex gap-2 items-center break-words max-sm:flex-col'>
               <Badge>
                 <FaEye />
               </Badge>
@@ -19,7 +19,7 @@ export default function UserActions({
             </span>
           </ListGroup.Item>
           <ListGroup.Item disabled={true}>
-            <span className='flex gap-2 items-center'>
+            <span className='flex gap-2 items-center break-words max-sm:flex-col'>
               <Badge color='warning'>
                 <FaStar />
               </Badge>
@@ -27,7 +27,7 @@ export default function UserActions({
             </span>
           </ListGroup.Item>
           <ListGroup.Item disabled={true}>
-            <span className='flex gap-2 items-center'>
+            <span className='flex gap-2 items-center break-words max-sm:flex-col'>
               <Badge color='failure'>
                 <FaHeart />
               </Badge>

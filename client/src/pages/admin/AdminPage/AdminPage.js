@@ -1,20 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../layout/NavBar/NavBar";
 import SideBar from "../layout/SideBar/SideBar";
 import { Outlet, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useJwt } from "react-jwt";
+import { decodeToken } from "react-jwt";
 
 export default function MainPage() {
-  const { decodedToken } = useJwt(Cookies.get("access_token"));
   const navigate = useNavigate();
+  const dekodedToken = decodeToken(Cookies.get("access_token"));
   useEffect(() => {
-    if (decodedToken) {
-      //navigate("/login");
-      console.log("ture olan", decodedToken);
-    } else {
-      console.log("false olan", decodedToken);
-      //navigate("/login");
+    if (!dekodedToken) {
+      navigate("/login");
     }
   }, []);
   return (

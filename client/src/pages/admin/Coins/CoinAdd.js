@@ -34,9 +34,7 @@ export default function CoinAdd() {
     dispatch(submitAddCoin(data));
   };
   const navigate = useNavigate();
-  useEffect(() => {
-    navigate("/admin/coins");
-  }, [serverResponse]);
+
   useEffect(() => {
     function fetchData() {
       dispatch(getAllCountries(""));
@@ -167,7 +165,7 @@ export default function CoinAdd() {
               to='/admin/coins'
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
-              Back list
+              Back
             </NavLink>
             <button
               type='submit'
