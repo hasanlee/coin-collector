@@ -10,6 +10,11 @@ import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
 import { Spinner, Modal, Button } from "flowbite-react";
 import Input from "../../../components/Input/Input";
 import Dialog from "../../../components/Dialog/Dialog";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import InputValidationError from "../../../components/Input/InputValidationError";
+import { countrySchema } from "../../../utils/ValidationSchemas";
+
 export default function CountryList() {
   const dispatch = useDispatch();
   const { countries, loading, error, serverResponse } = useSelector(
@@ -35,6 +40,15 @@ export default function CountryList() {
     setCountry({});
     setShowModal(true);
   };
+
+  //#region FormValidation
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ resolver: yupResolver(countrySchema) });
+  //#endregion
+
   const submitHandler = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -191,23 +205,36 @@ export default function CountryList() {
           {mode === "EDIT" ? "Edit : " + country.name : "Add new"}
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={submitHandler}>
-            <Input
-              label='Name'
-              type='text'
-              id='name'
-              name='name'
-              value={country.name}
-              autoComplete='off'
-            />
-            <Input
-              label='Code'
-              type='text'
-              id='code'
-              name='code'
-              value={country.code}
-              autoComplete='off'
-            />
+          <form onSubmit={handleSubmit(submitHandler)}>
+            <div className='mb-6'>
+              <Input
+                label='Name'
+                type='text'
+                id='name'
+                name='name'
+                value={country.name}
+                autoComplete='off'
+                register={{
+                  ...register("name"),
+                }}
+              />
+              <InputValidationError error={errors.name} />
+            </div>
+            <div className='mb-6'>
+              <Input
+                label='Code'
+                type='text'
+                id='code'
+                name='code'
+                value={country.code}
+                autoComplete='off'
+                register={{
+                  ...register("code"),
+                }}
+              />
+              <InputValidationError error={errors.code} />
+            </div>
+
             <div className='flex justify-end mx-3'>
               <button className='inline-flex gap-3 items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'>
                 Save

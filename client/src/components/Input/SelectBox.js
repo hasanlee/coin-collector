@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-export default function SelectBox({ label, name, id, options, value }) {
+export default function SelectBox({
+  label,
+  name,
+  id,
+  options,
+  value,
+  register,
+}) {
   const [selectValue, setSelectValue] = useState(value);
   useEffect(() => {
     setSelectValue(value);
   }, [value]);
   return (
-    <div className='mb-6'>
+    <div>
       <label
         htmlFor={id}
         className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
@@ -14,6 +21,7 @@ export default function SelectBox({ label, name, id, options, value }) {
         {label}
       </label>
       <select
+        {...register}
         onChange={(e) => {
           setSelectValue(e.target.value);
         }}

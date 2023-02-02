@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-export default function TextArea({ label, name, id, placeholder, value }) {
+export default function TextArea({
+  label,
+  name,
+  id,
+  placeholder,
+  value,
+  register,
+}) {
   const [text, setText] = useState(value);
   useEffect(() => {
     setText(value);
   }, [value]);
   return (
-    <div className='mb-6'>
+    <div>
       <label
         htmlFor={id}
         className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
@@ -14,6 +21,7 @@ export default function TextArea({ label, name, id, placeholder, value }) {
         {label}
       </label>
       <textarea
+        {...register}
         id={id}
         name={name}
         rows='4'

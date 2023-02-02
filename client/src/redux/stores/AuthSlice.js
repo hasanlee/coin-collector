@@ -1,11 +1,12 @@
 import axios from "../../utils/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
+import { decodeToken } from "react-jwt";
 
 const initialState = {
   loading: false,
   error: null,
-  authToken: null,
+  authToken: decodeToken(Cookies.get("access_token")),
   success: false,
 };
 
@@ -38,7 +39,7 @@ const authReducer = createSlice({
   initialState,
   reducers: {
     removeTokenAndCookie: (state) => {
-      state.authToken = "";
+      state.authToken = null;
       Cookies.remove("access_token", { path: "/" });
     },
   },
@@ -50,7 +51,7 @@ const authReducer = createSlice({
       state.error = null;
     });
     builder.addCase(signIn.fulfilled, (state, action) => {
-      state.authToken = action.payload;
+      state.authToken = decodeToken(Cookies.get("access_token"));
       state.loading = false;
       state.success = true;
     });
@@ -67,7 +68,7 @@ const authReducer = createSlice({
       state.error = "";
     });
     builder.addCase(signUp.fulfilled, (state, action) => {
-      state.authToken = action.payload;
+      // state.authToken = action.payload;
       state.loading = false;
       state.success = true;
     });

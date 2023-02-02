@@ -1,13 +1,13 @@
-import React from "react";
-import Cookies from "js-cookie";
+import React, { useEffect } from "react";
 import DarkModeSwitcher from "../../../../components/DarkMode/DarkModeSwitcher";
 import NavLinks from "./NavLinks";
 import AuthButtons from "./AuthButtons";
 import ProfileButton from "../../../../components/ProfileButton/ProfileButton";
-import { useJwt } from "react-jwt";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 export default function NavBar() {
-  const { decodedToken } = useJwt(Cookies.get("access_token"));
+  const { authToken } = useSelector((state) => state.authReducer);
   return (
     <>
       <nav className='bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900'>
@@ -23,7 +23,7 @@ export default function NavBar() {
             </span>
           </a>
           <div className='flex md:order-2 gap-2'>
-            {decodedToken ? <ProfileButton /> : <AuthButtons />}
+            {authToken ? <ProfileButton /> : <AuthButtons />}
             <DarkModeSwitcher />
             <button
               data-collapse-toggle='navbar-cta'

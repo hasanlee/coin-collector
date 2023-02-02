@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-export default function InputFile({ label, name, id, placeholder, imgHolder }) {
+export default function InputFile({
+  label,
+  name,
+  id,
+  placeholder,
+  imgHolder,
+  register,
+}) {
   return (
     <>
       <div className='flex items-center justify-center w-full'>
@@ -35,7 +42,13 @@ export default function InputFile({ label, name, id, placeholder, imgHolder }) {
               {placeholder}
             </p>
           </div>
-          <input name={name} id={id} type='file' className='hidden' />
+          <input
+            name={name}
+            id={id}
+            type='file'
+            className='hidden'
+            {...register}
+          />
         </label>
       </div>
     </>

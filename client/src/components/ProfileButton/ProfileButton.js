@@ -1,21 +1,22 @@
 import { Avatar } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import { decodeToken } from "react-jwt";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
-
+import { removeTokenAndCookie } from "../../redux/stores/AuthSlice";
 export default function ProfileButton() {
-  const decodedToken = decodeToken(Cookies.get("access_token"));
+  const { authToken } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch();
+  const user = { ...authToken };
   const navigate = useNavigate();
-  const user = { ...decodedToken };
   const handleSignOut = () => {
-    console.log("sign out");
-    Cookies.remove("access_token", { path: "/" });
-    if (!decodedToken) {
-      navigate("/");
-    }
+    dispatch(removeTokenAndCookie());
   };
   const [openMenu, setOpenMenu] = useState(false);
+  useEffect(() => {
+    if (!authToken) {
+      navigate("/");
+    }
+  }, [authToken]);
   return (
     <>
       <div>

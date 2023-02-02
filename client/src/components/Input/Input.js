@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import InputValidationError from "./InputValidationError";
 
 export default function Input({
   label,
@@ -6,17 +7,18 @@ export default function Input({
   name,
   id,
   placeholder,
-  required,
+  required = false,
   value = "",
   icon,
   autoComplete,
+  register,
 }) {
   const [inputValue, setInputValue] = useState(value);
   useEffect(() => {
     setInputValue(value);
   }, [value]);
   return (
-    <div className='mb-6'>
+    <div>
       <label
         htmlFor={id}
         className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
@@ -32,6 +34,7 @@ export default function Input({
           ""
         )}
         <input
+          {...register}
           type={type}
           id={id}
           className={`${
