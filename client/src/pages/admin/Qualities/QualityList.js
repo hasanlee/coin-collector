@@ -49,18 +49,15 @@ export default function QualityList() {
   } = useForm({ resolver: yupResolver(qualitySchema) });
   //#endregion
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    let formObject = Object.fromEntries(data.entries());
+  const submitHandler = (data) => {
     const postData = {
       id: quality.id,
-      data: { ...formObject },
+      data: { ...data },
     };
     if (mode === "EDIT") {
       dispatch(submitEditQuality(postData));
     } else if (mode === "ADD") {
-      dispatch(submitAddQuality(formObject));
+      dispatch(submitAddQuality(data));
     }
     reloadData();
   };

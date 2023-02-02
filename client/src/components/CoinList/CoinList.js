@@ -18,7 +18,6 @@ export default function CoinList() {
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const pagetCoins = coins.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(coins.length / itemsPerPage);
 
@@ -48,7 +47,6 @@ export default function CoinList() {
       </div>
       <CustomPagination
         pageCount={pageCount}
-        isLoading={loading}
         handlePageChange={handlePageClick}
       />
     </>

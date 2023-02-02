@@ -36,16 +36,23 @@ export default function CoinAdd() {
   //#region FormValidation
   const {
     register,
-    control,
     formState: { errors },
     handleSubmit,
   } = useForm({ resolver: yupResolver(coinSchema) });
   //#endregion
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    dispatch(submitAddCoin(data));
+  const submitHandler = (data) => {
+    const fdata = new FormData();
+    for (const key in data) {
+      if (key === "imageUrl_front") {
+        fdata.append("file1", data[key][0]);
+      } else if (key === "imageUrl_back") {
+        fdata.append("file2", data[key][0]);
+      } else {
+        fdata.append(key, data[key]);
+      }
+    }
+    dispatch(submitAddCoin(fdata));
   };
   const navigate = useNavigate();
 
@@ -58,12 +65,19 @@ export default function CoinAdd() {
     }
     fetchData();
   }, []);
-
+  useEffect(() => {
+    if (serverResponse > 0) {
+      navigate("/admin/coins/");
+    }
+  }, [serverResponse]);
   return (
     <>
       {loading ? <OverlayLoading /> : null}
       {error ? (
-        <CustomToast type='failure' message={error?.message} show={false} />
+        <CustomToast type='failure' message={error?.message} show={true} />
+      ) : null}
+      {serverResponse > 0 ? (
+        <CustomToast type='success' message='Coin Added.' show={true} />
       ) : null}
       <form onSubmit={handleSubmit(submitHandler)}>
         <div className='flex flex-col gap-5'>

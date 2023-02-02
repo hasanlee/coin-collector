@@ -79,7 +79,7 @@ export default function CoinEdit() {
       <form onSubmit={submitHandler} encType='multipart/form-data'>
         <div className='flex flex-col gap-5'>
           <div className='grid lg:grid-cols-8 gap-5 md:grid-cols-8 grid-cols-1'>
-            <div className='lg:col-span-4 md:col-span-4 col-span-1 flex flex-col'>
+            <div className='lg:col-span-4 md:col-span-4 col-span-1 flex flex-col gap-5'>
               <Input
                 name='name'
                 type='text'
@@ -124,7 +124,7 @@ export default function CoinEdit() {
                 value={shortDescription}
               />
             </div>
-            <div className='lg:col-span-4 md:col-span-4 col-span-1 flex flex-col'>
+            <div className='lg:col-span-4 md:col-span-4 col-span-1 flex flex-col gap-5'>
               <SelectBox
                 name='typeId'
                 id='typeId'

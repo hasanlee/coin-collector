@@ -49,18 +49,15 @@ export default function CompositionList() {
   } = useForm({ resolver: yupResolver(compostionSchema) });
   //#endregion
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    let formObject = Object.fromEntries(data.entries());
+  const submitHandler = (data) => {
     const postData = {
       id: composition.id,
-      data: { ...formObject },
+      data: { ...data },
     };
     if (mode === "EDIT") {
       dispatch(submitEditComposition(postData));
     } else if (mode === "ADD") {
-      dispatch(submitAddComposition(formObject));
+      dispatch(submitAddComposition(data));
     }
     reloadData();
   };

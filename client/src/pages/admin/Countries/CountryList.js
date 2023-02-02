@@ -49,18 +49,15 @@ export default function CountryList() {
   } = useForm({ resolver: yupResolver(countrySchema) });
   //#endregion
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    let formObject = Object.fromEntries(data.entries());
+  const submitHandler = (data) => {
     const postData = {
       id: country.id,
-      data: { ...formObject },
+      data: { ...data },
     };
     if (mode === "EDIT") {
       dispatch(submitEditCountry(postData));
     } else if (mode === "ADD") {
-      dispatch(submitAddCountry(formObject));
+      dispatch(submitAddCountry(data));
     }
     reloadData();
   };

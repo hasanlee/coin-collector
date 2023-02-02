@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCoins, submitDeleteCoin } from "../../../redux/stores/CoinSlice";
 import { NavLink } from "react-router-dom";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
-import { Spinner } from "flowbite-react";
+import { Avatar, Spinner } from "flowbite-react";
 import Dialog from "../../../components/Dialog/Dialog";
 import CustomToast from "../../../components/Toast/CustomToast";
 
@@ -42,7 +42,7 @@ export default function CoinList() {
   return (
     <>
       {error ? (
-        <CustomToast type='failure' message={error?.message} show={false} />
+        <CustomToast type='failure' message={error?.message} show={true} />
       ) : null}
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
         <div className='flex justify-between'>
@@ -97,10 +97,13 @@ export default function CoinList() {
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
+                Images
+              </th>
+              <th scope='col' className='px-6 py-3'>
                 Coin name
               </th>
               <th scope='col' className='px-6 py-3'>
-                Matal
+                Short Desc.
               </th>
               <th scope='col' className='px-6 py-3'>
                 Issued Country
@@ -124,9 +127,22 @@ export default function CoinList() {
                     scope='row'
                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                   >
+                    <Avatar.Group>
+                      <Avatar img={coin.faceImage} rounded={true} />
+                      <Avatar img={coin.backImage} rounded={true} />
+                    </Avatar.Group>
+                  </td>
+                  <td
+                    scope='row'
+                    className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                  >
                     {coin.coinName}
                   </td>
-                  <td className='px-6 py-4'>{coin.composition}</td>
+                  <td className='px-6 py-4'>
+                    <p className='block line-clamp-2'>
+                      {coin.shortDescription}
+                    </p>
+                  </td>
                   <td className='px-6 py-4'>{coin.issuedByCountry}</td>
                   <td className='px-6 py-4'>{coin.year}</td>
                   <td className='px-6 py-4'>

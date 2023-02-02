@@ -8,6 +8,10 @@ export default function InputFile({
   imgHolder,
   register,
 }) {
+  const [picture, setPicture] = useState(null);
+  const onChangePicture = (e) => {
+    setPicture(URL.createObjectURL(e.target.files[0]));
+  };
   return (
     <>
       <div className='flex items-center justify-center w-full'>
@@ -18,6 +22,8 @@ export default function InputFile({
           <div className='flex flex-col items-center justify-center pt-5 pb-6'>
             {imgHolder ? (
               <img src={imgHolder} alt='id' className='rounded-lg w-[30%]' />
+            ) : picture ? (
+              <img src={picture} alt='id' className='rounded-lg w-[30%]' />
             ) : (
               <svg
                 aria-hidden='true'
@@ -47,6 +53,7 @@ export default function InputFile({
             id={id}
             type='file'
             className='hidden'
+            onInput={onChangePicture}
             {...register}
           />
         </label>

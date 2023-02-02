@@ -7,7 +7,7 @@ import {
   submitDeleteType,
 } from "../../../redux/stores/CoinSlice";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
-import { Spinner, Modal } from "flowbite-react";
+import { Spinner, Modal, Avatar } from "flowbite-react";
 import Input from "../../../components/Input/Input";
 import Dialog from "../../../components/Dialog/Dialog";
 import { useForm } from "react-hook-form";
@@ -49,18 +49,15 @@ export default function TypeList() {
   } = useForm({ resolver: yupResolver(categorySchema) });
   //#endregion
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    let formObject = Object.fromEntries(data.entries());
+  const submitHandler = (data) => {
     const postData = {
       id: type.id,
-      data: { ...formObject },
+      data: { ...data },
     };
     if (mode === "EDIT") {
       dispatch(submitEditType(postData));
     } else if (mode === "ADD") {
-      dispatch(submitAddType(formObject));
+      dispatch(submitAddType(data));
     }
     reloadData();
   };
@@ -161,7 +158,9 @@ export default function TypeList() {
                   >
                     {type.name}
                   </td>
-                  <td className='px-6 py-4'>{type.icon}</td>
+                  <td className='px-6 py-4 '>
+                    <Avatar img={type.icon} rounded={true} />
+                  </td>
                   <td className='px-6 py-4'>
                     <div
                       className='inline-flex rounded-md shadow-sm'

@@ -1,11 +1,7 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-export default function CustomPagination({
-  pageCount,
-  handlePageChange,
-  isLoading,
-}) {
+export default function CustomPagination({ pageCount, handlePageChange }) {
   return (
     <div className='flex justify-center'>
       {pageCount === 0 ? (

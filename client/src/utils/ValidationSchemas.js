@@ -69,14 +69,14 @@ export const coinSchema = yup.object({
     .number()
     .typeError("Select category.")
     .required("Category is required."),
-  imageUrl_front: yup
-    .string()
-    .max(150, "Face Image hasn't to be longer 150 characters.")
-    .required("Image is required."),
-  imageUrl_back: yup
-    .string()
-    .max(150, "Back Image hasn't to be longer 150 characters.")
-    .required("Image is required."),
+  //   imageUrl_front: yup
+  //     .string()
+  //     .max(150, "Face Image hasn't to be longer 150 characters.")
+  //     .required("Image is required."),
+  //   imageUrl_back: yup
+  //     .string()
+  //     .max(150, "Back Image hasn't to be longer 150 characters.")
+  //     .required("Image is required."),
   qualityId: yup
     .number()
     .typeError("Select quality.")
