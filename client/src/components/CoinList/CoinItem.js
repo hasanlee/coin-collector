@@ -41,20 +41,26 @@ export default function CoinItem({ coin }) {
           <div className='flex flex-wrap gap-2 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ml-3'>
             <Tooltip content='View'>
               <Badge>
-                <FaEye />
-                <p className='text-center'>{viewCount || ""}</p>
+                <div className='flex gap-1 justify-center items-center'>
+                  <FaEye />
+                  <p className='text-center'>{viewCount || "0"}</p>
+                </div>
               </Badge>
             </Tooltip>
             <Tooltip content='Favorited'>
               <Badge color='warning'>
-                <FaStar />
-                <p className='text-center'>{favoriteCount || ""}</p>
+                <div className='flex gap-1 justify-center items-center'>
+                  <FaStar />
+                  <p className='text-center'>{favoriteCount || "0"}</p>
+                </div>
               </Badge>
             </Tooltip>
             <Tooltip content='Likes'>
               <Badge color='failure'>
-                <FaHeart />
-                <p className='text-center'>{likeCount || ""}</p>
+                <div className='flex gap-1 justify-center items-center'>
+                  <FaHeart />
+                  <p className='text-center'>{likeCount || "0"}</p>
+                </div>
               </Badge>
             </Tooltip>
           </div>

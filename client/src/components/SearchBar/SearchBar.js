@@ -9,6 +9,13 @@ export default function SearchBar() {
     e.preventDefault();
     dispatch(setSearchQuery(searchText));
   };
+  const onChageHandler = (e) => {
+    setSearchText(e.target.value);
+    if (e.target.value.length < 3) {
+      console.log(e.target.value.length);
+      dispatch(setSearchQuery(""));
+    }
+  };
   return (
     <div className='w-full'>
       <form>
@@ -42,9 +49,7 @@ export default function SearchBar() {
             className='block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
             placeholder='Search Coins...'
             autoComplete='off'
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
+            onChange={onChageHandler}
             required
           />
           <button

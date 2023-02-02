@@ -4,7 +4,7 @@ export default function CategoryItem({ id, name, description, icon }) {
   return (
     <div>
       <div className='max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center p-2'>
           <img
             className='rounded-t-lg w-1/2'
             src={icon || "/coin.png"}
