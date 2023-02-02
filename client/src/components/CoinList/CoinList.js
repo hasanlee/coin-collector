@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { getAllCoins } from "../../redux/stores/CoinSlice";
 import OverlayLoading from "../LoadingSpinner/OverlayLoading";
 import CustomPagination from "../Pagination/CustomPagination";
+import { setSearchQuery } from "../../redux/stores/SearchSlice";
 
 export default function CoinList() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ export default function CoinList() {
   const { query } = useSelector((state) => state.searchReducer);
   const [parent, enableAnimations] = useAutoAnimate();
   const { slug } = useParams();
+  const searchQuery = slug ? "?type=" + slug : "";
   //#region Pagination
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [itemOffset, setItemOffset] = useState(0);
