@@ -5,6 +5,7 @@ const initialState = {
   alertState: true,
   alertList: [],
   modalState: false,
+  sideBarOpen: true,
 };
 
 const hideAlert = (alerts, id) => {
@@ -29,10 +30,18 @@ const toggle = createSlice({
     showAlert: (state, action) => {
       state.alertList = [...state.alertList, action.payload];
     },
+    toggleSidebar: (state) => {
+      state.sideBarOpen = !state.sideBarOpen;
+    },
   },
   extraReducers: {},
 });
 
-export const { toggleDarkMode, toggleModal, toggleAlert, showAlert } =
-  toggle.actions;
+export const {
+  toggleDarkMode,
+  toggleModal,
+  toggleAlert,
+  showAlert,
+  toggleSidebar,
+} = toggle.actions;
 export default toggle.reducer;

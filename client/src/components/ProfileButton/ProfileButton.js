@@ -37,7 +37,7 @@ export default function ProfileButton() {
           />
         </button>
         {openMenu ? (
-          <div className='absolute z-50  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600'>
+          <div className='absolute right-5 z-50  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600'>
             <div className='px-4 py-3'>
               <span className='block text-sm text-gray-900 dark:text-white'>
                 {user.fullname || user.username}
