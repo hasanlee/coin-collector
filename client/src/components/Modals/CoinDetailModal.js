@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Avatar, Table } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../redux/stores/ToggleSlice";
+import {
+  coinFavorite,
+  coinLike,
+  coinView,
+} from "../../redux/stores/UserActionsSlice";
 import UserActions from "../UserActions/UserActions";
 
 export default function CoinDetailModal() {
@@ -34,6 +39,12 @@ export default function CoinDetailModal() {
   const closeModal = () => {
     dispatch(toggleModal(false));
   };
+
+  useEffect(() => {
+    if (modalState) {
+      dispatch(coinView(coinId));
+    }
+  }, [modalState]);
   return (
     <>
       <Modal
