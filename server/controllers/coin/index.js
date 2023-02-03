@@ -125,6 +125,18 @@ const getAllTypes = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
+const getSimilarCoins = trycatch(async (req, res, next) => {
+  await (
+    await connection
+  )
+    .query("CALL similar_coins(?)", [req.params.id])
+    .then(([rows]) => {
+      return res.status(200).json(rows[0]);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+});
 //#endregion
 //#region Insert data to DB
 const addNewCoin = trycatch(async (req, res, next) => {
@@ -425,4 +437,5 @@ module.exports = {
   deleteType,
   increaseView,
   getViewCount,
+  getSimilarCoins,
 };

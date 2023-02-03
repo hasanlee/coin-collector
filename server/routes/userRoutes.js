@@ -12,6 +12,7 @@ const {
   getCoinByIdView,
   increaseView,
   getViewCount,
+  getSimilarCoins,
 } = require("../controllers/coin");
 const {
   favorite_coin,
@@ -65,6 +66,10 @@ userRoutes.post("/coin/view/:id", function (req, res, next) {
 
 userRoutes.get("/coin/views/:id", function (req, res, next) {
   getViewCount(req, res, next);
+});
+
+userRoutes.get("/coins/similar/:id", function (req, res, next) {
+  getSimilarCoins(req, res, next);
 });
 
 //#endregion
