@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Modal, Avatar, Table } from "flowbite-react";
+import React, { useEffect } from "react";
+import { Modal, Avatar } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../redux/stores/ToggleSlice";
 import {
@@ -8,6 +8,9 @@ import {
   coinView,
 } from "../../redux/stores/UserActionsSlice";
 import UserActions from "../UserActions/UserActions";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
 
 export default function CoinDetailModal() {
   const { coinDetail } = useSelector((state) => state.coinReducer);
@@ -109,6 +112,35 @@ export default function CoinDetailModal() {
                   <p className='border-b dark:border-gray-600'>{year}</p>
                   <p className='border-b dark:border-gray-600'>{weight}</p>
                 </div>
+              </div>
+              <div className=' text-gray-700 dark:text-gray-400 p-4 border rounded-t dark:border-gray-600 '>
+                <h3 className='border-b dark:border-gray-600 mb-2'>
+                  Similar Coins
+                </h3>
+                <Swiper slidesPerView={4} spaceBetween={10} className=''>
+                  <SwiperSlide>
+                    <div class='flex items-center space-x-4'>
+                      <Avatar rounded={true} />
+                      <div class='font-medium dark:text-white'>
+                        <div>Jefferson</div>
+                        <div class='text-sm text-gray-500 dark:text-gray-400'>
+                          US in 1923
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div class='flex items-center space-x-4'>
+                      <Avatar rounded={true} />
+                      <div class='font-medium dark:text-white'>
+                        <div>Looney</div>
+                        <div class='text-sm text-gray-500 dark:text-gray-400'>
+                          CA in 1960
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
               </div>
             </div>
           </div>
