@@ -15,7 +15,7 @@ export default function CoinList() {
   const { query } = useSelector((state) => state.searchReducer);
   const [parent, enableAnimations] = useAutoAnimate();
   const { slug } = useParams();
-  const searchQuery = slug ? "?type=" + slug : "";
+  const searchQuery = slug ? (query ? "&type=" + slug : "?type=" + slug) : "";
   //#region Pagination
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [itemOffset, setItemOffset] = useState(0);
@@ -31,7 +31,7 @@ export default function CoinList() {
 
   useEffect(() => {
     function fetchData() {
-      dispatch(getAllCoins(query));
+      dispatch(getAllCoins(query + searchQuery));
     }
     fetchData();
   }, [query]);

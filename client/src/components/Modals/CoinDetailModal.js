@@ -65,35 +65,39 @@ export default function CoinDetailModal() {
                   {description}
                 </p>
               </div>
-              <div>
-                <Table className=''>
-                  <Table.Body className='divide-y text-black dark:text-white lg:text-base text-sm'>
-                    <Table.Row className='divide-x'>
-                      <Table.Cell>Issuing Country</Table.Cell>
-                      <Table.Cell>{issuedByCountry}</Table.Cell>
-                    </Table.Row>
-                    <Table.Row className='divide-x'>
-                      <Table.Cell>Composition</Table.Cell>
-                      <Table.Cell>{composition}</Table.Cell>
-                    </Table.Row>
-                    <Table.Row className='divide-x'>
-                      <Table.Cell>Quality</Table.Cell>
-                      <Table.Cell>{quality}</Table.Cell>
-                    </Table.Row>
-                    <Table.Row className='divide-x'>
-                      <Table.Cell>Denomination</Table.Cell>
-                      <Table.Cell>{denomination}</Table.Cell>
-                    </Table.Row>
-                    <Table.Row className='divide-x'>
-                      <Table.Cell>Year</Table.Cell>
-                      <Table.Cell>{year}</Table.Cell>
-                    </Table.Row>
-                    <Table.Row className='divide-x'>
-                      <Table.Cell>Weight</Table.Cell>
-                      <Table.Cell>{weight}</Table.Cell>
-                    </Table.Row>
-                  </Table.Body>
-                </Table>
+              <div className='grid grid-cols-2 text-gray-700 dark:text-gray-400 p-4 border rounded-t dark:border-gray-600'>
+                <div className='flex flex-col'>
+                  <strong className='border-b dark:border-gray-600 '>
+                    Issuing Country :
+                  </strong>
+                  <strong className='border-b dark:border-gray-600'>
+                    Composition :
+                  </strong>
+                  <strong className='border-b dark:border-gray-600'>
+                    Quality :
+                  </strong>
+                  <strong className='border-b dark:border-gray-600'>
+                    Denomination :
+                  </strong>
+                  <strong className='border-b dark:border-gray-600'>
+                    Year :
+                  </strong>
+                  <strong className='border-b dark:border-gray-600'>
+                    Weight :
+                  </strong>
+                </div>
+                <div className='flex flex-col'>
+                  <p className='border-b dark:border-gray-600'>
+                    {issuedByCountry}
+                  </p>
+                  <p className='border-b dark:border-gray-600'>{composition}</p>
+                  <p className='border-b dark:border-gray-600'>{quality}</p>
+                  <p className='border-b dark:border-gray-600'>
+                    {denomination}
+                  </p>
+                  <p className='border-b dark:border-gray-600'>{year}</p>
+                  <p className='border-b dark:border-gray-600'>{weight}</p>
+                </div>
               </div>
             </div>
           </div>
