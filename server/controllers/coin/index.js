@@ -412,7 +412,30 @@ const getViewCount = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
-
+const totalCoinViews = trycatch(async (req, res, next) => {
+  await (
+    await connection
+  )
+    .query("SELECT SUM(view_count) as count from coin_views")
+    .then(([data]) => {
+      return res.status(200).json(data[0]);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+});
+const totalCoins = trycatch(async (req, res, next) => {
+  await (
+    await connection
+  )
+    .query("SELECT COUNT(*) as count FROM coins")
+    .then(([data]) => {
+      return res.status(200).json(data[0]);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+});
 module.exports = {
   getAllCoins,
   getAllCoinsView,
@@ -440,4 +463,6 @@ module.exports = {
   increaseView,
   getViewCount,
   getSimilarCoins,
+  totalCoinViews,
+  totalCoins,
 };

@@ -16,7 +16,11 @@ const {
   deleteCountry,
   deleteQuality,
   deleteType,
+  totalCoinViews,
+  totalCoins,
 } = require("../controllers/coin");
+const { totalFavorites } = require("../controllers/favorites");
+const { totalLikes } = require("../controllers/like_coin");
 
 adminRoutes.get("/", (req, res) => {
   res.json(req.user);
@@ -86,7 +90,18 @@ adminRoutes.delete("/type/:id", (req, res, next) => {
 });
 //#endregion
 //#region Dashboard
-
+adminRoutes.get("/total/views", (req, res, next) => {
+  totalCoinViews(req, res, next);
+});
+adminRoutes.get("/total/favorites", (req, res, next) => {
+  totalFavorites(req, res, next);
+});
+adminRoutes.get("/total/likes", (req, res, next) => {
+  totalLikes(req, res, next);
+});
+adminRoutes.get("/total/coins", (req, res, next) => {
+  totalCoins(req, res, next);
+});
 //#endregion
 
 module.exports = adminRoutes;

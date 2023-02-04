@@ -61,5 +61,22 @@ const check_liked = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
-
-module.exports = { like_coin, dislike_coin, like_count, check_liked };
+const totalLikes = trycatch(async (req, res, next) => {
+  await (
+    await connection
+  )
+    .query("SELECT COUNT(*) as count FROM likes")
+    .then(([data]) => {
+      return res.status(200).json(data[0]);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+});
+module.exports = {
+  like_coin,
+  dislike_coin,
+  like_count,
+  check_liked,
+  totalLikes,
+};

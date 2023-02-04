@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FiDatabase, FiEye, FiHeart, FiStar } from "react-icons/fi";
 import CountCard from "./components/CountCard";
 import EmptyHolder from "./components/EmptyHolder";
 import PlotCard from "./components/PlotCard";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getTotalViews,
+  getTotalFavorites,
+  getTotalLikes,
+  getTotalCoins,
+} from "../../../redux/stores/DashboardSlice";
 
 export default function Dashboard() {
+  const { totalLikes, totalFavorites, totalCoinViews, totalCoins } =
+    useSelector((state) => state.dashboardReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTotalFavorites());
+    dispatch(getTotalLikes());
+    dispatch(getTotalViews());
+    dispatch(getTotalCoins());
+  }, []);
   return (
     <>
       <div className='grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-4'>
@@ -12,7 +29,7 @@ export default function Dashboard() {
           <CountCard
             title='Total Coins'
             color='orange'
-            count='12'
+            count={totalCoins}
             icon={<FiDatabase />}
           />
         </div>
@@ -20,7 +37,7 @@ export default function Dashboard() {
           <CountCard
             title='Total Likes'
             color='red'
-            count='12'
+            count={totalLikes}
             icon={<FiHeart />}
           />
         </div>
@@ -28,7 +45,7 @@ export default function Dashboard() {
           <CountCard
             title='Total Favorites'
             color='yellow'
-            count='12'
+            count={totalFavorites}
             icon={<FiStar />}
           />
         </div>
@@ -36,7 +53,7 @@ export default function Dashboard() {
           <CountCard
             title='Total Views'
             color='blue'
-            count='12'
+            count={totalCoinViews}
             icon={<FiEye />}
           />
         </div>

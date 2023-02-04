@@ -61,5 +61,22 @@ const check_favorited = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
-
-module.exports = { favorite_coin, remove_favorite, favorites, check_favorited };
+const totalFavorites = trycatch(async (req, res, next) => {
+  await (
+    await connection
+  )
+    .query("SELECT COUNT(*) as count FROM favorites")
+    .then(([data]) => {
+      return res.status(200).json(data[0]);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+});
+module.exports = {
+  favorite_coin,
+  remove_favorite,
+  favorites,
+  check_favorited,
+  totalFavorites,
+};
