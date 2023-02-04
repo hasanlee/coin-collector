@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import DarkModeSwitcher from "../../../../components/DarkMode/DarkModeSwitcher";
 import NavLinks from "./NavLinks";
 import AuthButtons from "./AuthButtons";
 import ProfileButton from "../../../../components/ProfileButton/ProfileButton";
-import { useSelector } from "react-redux";
-import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { FaCartPlus } from "react-icons/fa";
+import { toggleCart } from "../../../../redux/stores/ToggleSlice";
 
 export default function NavBar() {
   const { authToken } = useSelector((state) => state.authReducer);
+  const { cartDrawerOpen } = useSelector((state) => state.toggle);
+  const dispatch = useDispatch();
   return (
     <>
       <nav className='bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900'>
@@ -24,6 +27,18 @@ export default function NavBar() {
           </a>
           <div className='flex md:order-2 gap-2'>
             {authToken ? <ProfileButton /> : <AuthButtons />}
+            <button
+              onClick={() => {
+                dispatch(toggleCart(!cartDrawerOpen));
+              }}
+              type='button'
+              className='relative text-gray-700 border border-gray-700 hover:bg-gray-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-gray-500 dark:text-gray-500 dark:hover:text-white dark:focus:ring-gray-800'
+            >
+              <FaCartPlus size={18} />
+              <div class='absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900'>
+                0
+              </div>
+            </button>
             <DarkModeSwitcher />
             <button
               data-collapse-toggle='navbar-cta'

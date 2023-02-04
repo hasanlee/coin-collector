@@ -14,6 +14,7 @@ import CountryList from "./pages/admin/Countries/CountryList";
 import QualityList from "./pages/admin/Qualities/QualityList";
 import CompositionList from "./pages/admin/Compositions/CompositionList";
 import TypeList from "./pages/admin/Types/TypeList";
+import DetailPage from "./pages/home/DetailPage/DetailPage";
 
 function App() {
   const { darkMode } = useSelector((state) => state.toggle);
@@ -36,6 +37,7 @@ function App() {
         <Route path='/' exact element={<MainPage />} />
         <Route path='/coins' exact element={<ListPage />} />
         <Route path='/coins/:slug' exact element={<ListPage />} />
+        <Route path='/coin/:id' exact element={<DetailPage />} />
         <Route exact path='/admin' element={<AdminPage />}>
           <Route exact path='/admin/dashboard' element={<Dashboard />} />
           <Route exact path='/admin/coins' element={<CoinList />} />

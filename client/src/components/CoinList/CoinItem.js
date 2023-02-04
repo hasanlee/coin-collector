@@ -5,6 +5,7 @@ import { FaEye, FaStar, FaHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { viewCoinDetail } from "../../redux/stores/CoinSlice";
 import { toggleModal } from "../../redux/stores/ToggleSlice";
+import { NavLink } from "react-router-dom";
 export default function CoinItem({ coin }) {
   const {
     coinId,
@@ -93,12 +94,18 @@ export default function CoinItem({ coin }) {
             <span className='text-3xl font-bold text-gray-900 dark:text-white'>
               ${price}
             </span>
-            <button
+            <NavLink
+              to={"/coin/" + coinId}
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+            >
+              View details
+            </NavLink>
+            {/* <button
               onClick={setDetail}
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
               View details
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

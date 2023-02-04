@@ -11,6 +11,7 @@ const initialState = {
   countries: [],
   qualities: [],
   coins: [],
+  similarCoins: [],
   coin: {},
 };
 
@@ -74,6 +75,17 @@ export const getCoinById = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get("/coins/" + id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const getSimilarCoins = createAsyncThunk(
+  "getSimilarCoins",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/coins/similar/" + id);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -356,6 +368,22 @@ const coinReducer = createSlice({
       state.serverResponse = action.payload;
     });
     builder.addCase(getCoinById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region getSimilarCoins
+    builder.addCase(getSimilarCoins.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+      state.serverResponse = null;
+    });
+    builder.addCase(getSimilarCoins.fulfilled, (state, action) => {
+      state.similarCoins = action.payload;
+      state.loading = false;
+      state.serverResponse = action.payload;
+    });
+    builder.addCase(getSimilarCoins.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

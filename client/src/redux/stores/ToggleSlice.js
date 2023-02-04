@@ -6,6 +6,7 @@ const initialState = {
   alertList: [],
   modalState: false,
   sideBarOpen: true,
+  cartDrawerOpen: false,
 };
 
 const hideAlert = (alerts, id) => {
@@ -33,6 +34,9 @@ const toggle = createSlice({
     toggleSidebar: (state) => {
       state.sideBarOpen = !state.sideBarOpen;
     },
+    toggleCart: (state) => {
+      state.cartDrawerOpen = !state.cartDrawerOpen;
+    },
   },
   extraReducers: {},
 });
@@ -43,5 +47,6 @@ export const {
   toggleAlert,
   showAlert,
   toggleSidebar,
+  toggleCart,
 } = toggle.actions;
 export default toggle.reducer;
