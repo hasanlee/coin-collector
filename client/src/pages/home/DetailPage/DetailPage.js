@@ -14,6 +14,8 @@ import "swiper/css";
 import { NavLink, useParams } from "react-router-dom";
 import NotFound from "../../../components/Errors/NotFound";
 import SimilarCoinsList from "../../../components/SimilarCoins/SimilarCoinsList";
+import { FaArrowLeft, FaCartPlus } from "react-icons/fa";
+import { addToCart } from "../../../redux/stores/CartSlice";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -43,6 +45,10 @@ export default function DetailPage() {
   } = coin;
   const dispatch = useDispatch();
 
+  const addCart = () => {
+    dispatch(addToCart(coin));
+  };
+
   useEffect(() => {
     dispatch(coinView(id));
     dispatch(getCoinById(id));
@@ -56,10 +62,22 @@ export default function DetailPage() {
         <main className='grid grid-cols-1 px-20 pt-10 md:grid-cols-1 lg:grid-cols-6 gap-5'>
           <>
             <div className='col-span-4'>
-              <div className='ml-10 mb-20 flex'>
-                <h5 class='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
-                  {coinName}
-                </h5>
+              <div className='mb-20 flex justify-between items-center'>
+                <div className='flex items-center gap-3'>
+                  <NavLink to='/coins'>
+                    <FaArrowLeft className='dark:text-white' />
+                  </NavLink>
+                  <h5 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+                    {coinName}
+                  </h5>
+                </div>
+                <button
+                  onClick={addCart}
+                  className='flex items-center gap-1 text-gray-900 dark:text-white font-bold'
+                >
+                  <FaCartPlus size={24} className='dark:text-white' /> Add to
+                  cart
+                </button>
               </div>
               <div className='grid lg:grid-cols-4 gap-5 md:grid-cols-1 sm:grid-cols-1'>
                 <div className='lg:col-span-1 md:col-span-1 sm:col-span-1 flex lg:flex-col lg:gap-12 md:gap-6 md:flex-col md:justify-between sm:flex-col flex-col gap-5'>

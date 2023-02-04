@@ -10,6 +10,7 @@ import { toggleCart } from "../../../../redux/stores/ToggleSlice";
 export default function NavBar() {
   const { authToken } = useSelector((state) => state.authReducer);
   const { cartDrawerOpen } = useSelector((state) => state.toggle);
+  const { cart } = useSelector((state) => state.cartReducer);
   const dispatch = useDispatch();
   return (
     <>
@@ -35,8 +36,8 @@ export default function NavBar() {
               className='relative text-gray-700 border border-gray-700 hover:bg-gray-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-gray-500 dark:text-gray-500 dark:hover:text-white dark:focus:ring-gray-800'
             >
               <FaCartPlus size={18} />
-              <div class='absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900'>
-                0
+              <div className='absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900'>
+                {cart.length}
               </div>
             </button>
             <DarkModeSwitcher />

@@ -119,22 +119,22 @@ export default function CoinDetailModal() {
                 </h3>
                 <Swiper slidesPerView={4} spaceBetween={10} className=''>
                   <SwiperSlide>
-                    <div class='flex items-center space-x-4'>
+                    <div className='flex items-center space-x-4'>
                       <Avatar rounded={true} />
-                      <div class='font-medium dark:text-white'>
+                      <div className='font-medium dark:text-white'>
                         <div>Jefferson</div>
-                        <div class='text-sm text-gray-500 dark:text-gray-400'>
+                        <div className='text-sm text-gray-500 dark:text-gray-400'>
                           US in 1923
                         </div>
                       </div>
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div class='flex items-center space-x-4'>
+                    <div className='flex items-center space-x-4'>
                       <Avatar rounded={true} />
-                      <div class='font-medium dark:text-white'>
+                      <div className='font-medium dark:text-white'>
                         <div>Looney</div>
-                        <div class='text-sm text-gray-500 dark:text-gray-400'>
+                        <div className='text-sm text-gray-500 dark:text-gray-400'>
                           CA in 1960
                         </div>
                       </div>

@@ -18,7 +18,7 @@ export default function SimilarCoinsList({ id }) {
       <div className='flex flex-col gap-5'>
         {loading ? "Finding similar coins..." : null}
         {similarCoins?.map((coin) => {
-          return <SimilarCoinsItem {...coin} />;
+          return <SimilarCoinsItem {...coin} key={coin.id} />;
         })}
       </div>
     </div>

@@ -5,7 +5,9 @@ import { FaEye, FaStar, FaHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { viewCoinDetail } from "../../redux/stores/CoinSlice";
 import { toggleModal } from "../../redux/stores/ToggleSlice";
+import { addToCart } from "../../redux/stores/CartSlice";
 import { NavLink } from "react-router-dom";
+import { FaCartPlus } from "react-icons/fa";
 export default function CoinItem({ coin }) {
   const {
     coinId,
@@ -34,6 +36,9 @@ export default function CoinItem({ coin }) {
   const setDetail = () => {
     dispatch(viewCoinDetail(coin));
     dispatch(toggleModal(true));
+  };
+  const addCart = () => {
+    dispatch(addToCart(coin));
   };
   return (
     <>
@@ -94,18 +99,26 @@ export default function CoinItem({ coin }) {
             <span className='text-3xl font-bold text-gray-900 dark:text-white'>
               ${price}
             </span>
-            <NavLink
-              to={"/coin/" + coinId}
-              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-            >
-              View details
-            </NavLink>
-            {/* <button
+            <div className='flex gap-1'>
+              <NavLink
+                to={"/coin/" + coinId}
+                className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+              >
+                View details
+              </NavLink>
+              <button
+                onClick={addCart}
+                className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+              >
+                <FaCartPlus size={18} />
+              </button>
+              {/* <button
               onClick={setDetail}
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
               View details
             </button> */}
+            </div>
           </div>
         </div>
       </div>

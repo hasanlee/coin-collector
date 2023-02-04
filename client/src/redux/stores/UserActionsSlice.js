@@ -32,7 +32,7 @@ export const coinFavorite = createAsyncThunk(
 );
 
 export const coinView = createAsyncThunk(
-  "coinFavorite",
+  "coinView",
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.post("/coin/view/" + id);
