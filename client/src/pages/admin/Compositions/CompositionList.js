@@ -71,7 +71,7 @@ export default function CompositionList() {
   };
 
   const reloadData = () => {
-    dispatch(getAllCompositions(search));
+    dispatch(getAllCompositions("?s=" + search));
   };
 
   useEffect(() => {

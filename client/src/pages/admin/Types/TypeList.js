@@ -70,7 +70,7 @@ export default function TypeList() {
     setSearch(searchText);
   };
   const reloadData = () => {
-    dispatch(getAllCoinTypes(search));
+    dispatch(getAllCoinTypes("?s=" + search));
   };
   useEffect(() => {
     setShowModal(false);

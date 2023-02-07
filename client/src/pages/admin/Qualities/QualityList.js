@@ -69,7 +69,7 @@ export default function QualityList() {
     setSearch(searchText);
   };
   const reloadData = () => {
-    dispatch(getAllQualities(search));
+    dispatch(getAllQualities("?s=" + search));
   };
   useEffect(() => {
     setShowModal(false);

@@ -89,7 +89,8 @@ export default function CartDrawer() {
               {cart.length > 0
                 ? cart.reduce(
                     (accumulator, currentValue) =>
-                      accumulator + Number(currentValue.price),
+                      accumulator +
+                      Number(currentValue.price) * currentValue.quantity,
                     0
                   )
                 : 0}{" "}

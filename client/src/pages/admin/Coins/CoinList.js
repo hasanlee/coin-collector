@@ -29,7 +29,7 @@ export default function CoinList() {
     setSearch(searchText);
   };
   const reloadData = () => {
-    dispatch(getAllCoins(search));
+    dispatch(getAllCoins("?s=" + search));
   };
 
   useEffect(() => {

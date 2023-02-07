@@ -71,7 +71,7 @@ export default function CountryList() {
   };
 
   const reloadData = () => {
-    dispatch(getAllCountries(search));
+    dispatch(getAllCountries("?s=" + search));
   };
 
   useEffect(() => {
