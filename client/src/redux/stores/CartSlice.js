@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
   cart: JSON.parse(localStorage.getItem("coinCart")) || [],
@@ -9,9 +9,21 @@ const cartReducer = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      let exista = state.cart.find((coin) => coin.id === action.payload.id);
-      console.log(exista);
-      state.cart = [...state.cart, { ...action.payload, count: 1 }];
+      const { coinId } = action.payload;
+      const exist = state.cart.find((coin) => coin.coinId === coinId);
+      if (exist) {
+        state.cart = state.cart.map((c) => {
+          if (c.coinId === coinId) {
+            return {
+              ...c,
+              quantity: c.quantity + 1,
+            };
+          }
+          return c;
+        });
+      } else {
+        state.cart = [...state.cart, { ...action.payload, quantity: 1 }];
+      }
       localStorage.setItem("coinCart", JSON.stringify(state.cart));
     },
     removeFromCart: (state, action) => {

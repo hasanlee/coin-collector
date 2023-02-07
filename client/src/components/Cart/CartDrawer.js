@@ -73,11 +73,11 @@ export default function CartDrawer() {
                           {item.coinName}
                         </p>
                         <p className='text-sm text-gray-500 truncate dark:text-gray-400'>
-                          Quantity : {item.count}
+                          Quantity : {item.quantity}
                         </p>
                       </div>
                       <div className='inline-flex items-center text-base font-semibold text-gray-900 dark:text-white'>
-                        {item.price * item.count} $
+                        {item.price * item.quantity} $
                       </div>
                     </div>
                   </li>
