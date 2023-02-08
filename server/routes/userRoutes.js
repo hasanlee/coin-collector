@@ -13,6 +13,7 @@ const {
   increaseView,
   getViewCount,
   getSimilarCoins,
+  totalCoins,
 } = require("../controllers/coin");
 const {
   favorite_coin,
@@ -30,6 +31,10 @@ const {
 //#region No auth required
 userRoutes.get("/", function (req, res) {
   res.status(200).send({ error: false, message: "Coin Collector API v 1.0" });
+});
+
+userRoutes.get("/coins/total", function (req, res, next) {
+  totalCoins(req, res, next);
 });
 
 userRoutes.get("/coins", function (req, res, next) {

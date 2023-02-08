@@ -9,7 +9,7 @@ export default function CustomCarousel({ images }) {
             <img
               className='relative'
               key={index}
-              src={image || "/coin.png"}
+              src={image ? process.env.REACT_APP_API_URL + image : "/coin.png"}
               alt={"Image" + index}
             />
           );

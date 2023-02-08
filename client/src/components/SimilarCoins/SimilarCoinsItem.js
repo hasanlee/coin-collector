@@ -16,8 +16,14 @@ export default function SimilarCoinsItem({
     <div className='flex items-center space-x-4 justify-between pr-5'>
       <div className='flex items-center space-x-4'>
         <AvatarGroup>
-          <Avatar rounded={true} img={imageUrl_front} />
-          <Avatar rounded={true} img={imageUrl_back} />
+          <Avatar
+            rounded={true}
+            img={process.env.REACT_APP_API_URL + imageUrl_front}
+          />
+          <Avatar
+            rounded={true}
+            img={process.env.REACT_APP_API_URL + imageUrl_back}
+          />
         </AvatarGroup>
         <div className='font-medium dark:text-white'>
           <div>{name}</div>

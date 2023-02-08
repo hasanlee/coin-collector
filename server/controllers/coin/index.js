@@ -4,7 +4,6 @@ const { fileUpload } = require("../../utils/fileUpload");
 const moment = require("moment");
 
 //const funcTemplate = trycatch(async (req, res, next) => {});
-//TODO: Geri gonderilen melumatlar ucun base class hazirla
 //#region Get Data from DB
 const getAllCoins = trycatch(async (req, res, next) => {
   await (
@@ -19,8 +18,18 @@ const getAllCoins = trycatch(async (req, res, next) => {
     });
 });
 const getAllCoinsView = trycatch(async (req, res, next) => {
-  const { s, type, country, quality, yearMin, yearMax, priceMin, priceMax } =
-    req.query;
+  const {
+    s,
+    type,
+    country,
+    quality,
+    yearMin,
+    yearMax,
+    priceMin,
+    priceMax,
+    perPage,
+    page,
+  } = req.query;
   await (
     await connection
   )
@@ -39,7 +48,7 @@ const getAllCoinsView = trycatch(async (req, res, next) => {
       ${priceMin ? ` AND price >= '${priceMin}'` : ``}
       ${priceMax ? ` AND price <= '${priceMax}'` : ``}
       ${type ? ` AND type = '${type}'` : ``}
-      ORDER BY coinName;`
+      ORDER BY coinName LIMIT ${perPage || 9999} OFFSET ${page | 0};`
     )
     .then(([rows]) => {
       return res.status(200).json(rows);

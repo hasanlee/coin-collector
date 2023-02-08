@@ -7,7 +7,7 @@ export default function CategoryItem({ id, name, description, icon }) {
         <div className='flex items-center justify-center p-2'>
           <img
             className='rounded-t-lg w-1/2'
-            src={icon || "/coin.png"}
+            src={icon ? process.env.REACT_APP_API_URL + icon : "/coin.png"}
             alt={name}
           />
         </div>

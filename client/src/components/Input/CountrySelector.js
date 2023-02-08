@@ -9,14 +9,17 @@ export default function CountrySelector({
   id,
   required,
   countries,
+  value = { name: "Azerbaijan", code: "AZ" },
 }) {
-  const [selected, setSelected] = useState({ name: "Azerbaijan", code: "AZ" });
+  const [selected, setSelected] = useState(value);
 
   const onChangeHandler = (e) => {
     const selectedCountury = [...countries].filter(({ code }) => code === e);
     setSelected(selectedCountury[0]);
   };
-
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
   return (
     <div>
       <label

@@ -66,7 +66,10 @@ export default function CartDrawer() {
                         <FaTrash className='text-red-600' />
                       </button>
                       <div className='flex-shrink-0'>
-                        <Avatar rounded={true} img={item.faceImage} />
+                        <Avatar
+                          rounded={true}
+                          img={process.env.REACT_APP_API_URL + item.faceImage}
+                        />
                       </div>
                       <div className='flex-1 min-w-0'>
                         <p className='text-sm font-medium text-gray-900 truncate dark:text-white'>

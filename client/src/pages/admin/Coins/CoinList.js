@@ -128,8 +128,14 @@ export default function CoinList() {
                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
                   >
                     <Avatar.Group>
-                      <Avatar img={coin.faceImage} rounded={true} />
-                      <Avatar img={coin.backImage} rounded={true} />
+                      <Avatar
+                        img={process.env.REACT_APP_API_URL + coin.faceImage}
+                        rounded={true}
+                      />
+                      <Avatar
+                        img={process.env.REACT_APP_API_URL + coin.backImage}
+                        rounded={true}
+                      />
                     </Avatar.Group>
                   </td>
                   <td

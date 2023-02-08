@@ -159,7 +159,10 @@ export default function TypeList() {
                     {type.name}
                   </td>
                   <td className='px-6 py-4 '>
-                    <Avatar img={type.icon} rounded={true} />
+                    <Avatar
+                      img={process.env.REACT_APP_API_URL + type.icon}
+                      rounded={true}
+                    />
                   </td>
                   <td className='px-6 py-4'>
                     <div

@@ -30,11 +30,12 @@ export default function CoinEdit() {
     serverResponse,
   } = useSelector((state) => state.coinReducer);
   const {
-    id: coinId,
-    name: coinName,
-    short_description: shortDescription,
+    coinId,
+    coinName,
+    shortDescription,
     description,
-    issued_countryCode: issuedCountryId,
+    issuedByCountry,
+    issuedCountryId,
     compositionId,
     qualityId,
     denomination,
@@ -42,9 +43,10 @@ export default function CoinEdit() {
     weight,
     price,
     typeId,
-    imageUrl_front: faceImage,
-    imageUrl_back: backImage,
+    faceImage,
+    backImage,
   } = coin;
+  console.log(coin);
   const { id } = useParams();
   const dispatch = useDispatch();
   const submitHandler = (e) => {
@@ -69,6 +71,12 @@ export default function CoinEdit() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (serverResponse && serverResponse.affectedRows === 1) {
+      navigate("/admin/coins/");
+    }
+  }, [serverResponse]);
 
   return (
     <>
@@ -113,6 +121,7 @@ export default function CoinEdit() {
                 id='issued_countryCode'
                 label='Country'
                 countries={countries}
+                value={{ name: issuedByCountry, code: issuedCountryId }}
               />
               <TextArea
                 name='short_description'

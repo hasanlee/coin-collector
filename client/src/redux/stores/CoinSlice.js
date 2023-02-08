@@ -13,6 +13,7 @@ const initialState = {
   coins: [],
   similarCoins: [],
   coin: {},
+  coinsCount: 0,
 };
 
 export const getAllCoins = createAsyncThunk(
@@ -262,7 +263,17 @@ export const submitDeleteType = createAsyncThunk(
     }
   }
 );
-
+export const totalCoins = createAsyncThunk(
+  "totalCoins",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/coins/total");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 const coinReducer = createSlice({
   name: "coinReducer",
   initialState,
@@ -287,6 +298,23 @@ const coinReducer = createSlice({
       state.loading = false;
     });
     builder.addCase(getAllCoins.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    //#endregion
+    //#region totalCoins
+    builder.addCase(totalCoins.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+      state.serverResponse = null;
+    });
+    builder.addCase(totalCoins.fulfilled, (state, action) => {
+      state.totalCoins = action.payload.count;
+      state.serverResponse = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(totalCoins.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

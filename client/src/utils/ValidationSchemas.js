@@ -52,7 +52,7 @@ export const coinSchema = yup.object({
   short_description: yup
     .string()
     .required("Short description is required.")
-    .max(120, "Icon/Image hasn't to be longer 120 characters."),
+    .max(200, "Icon/Image hasn't to be longer 120 characters."),
   description: yup.string(),
   compositionId: yup
     .number()
