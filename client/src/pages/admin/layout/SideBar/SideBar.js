@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 
 export default function SideBar() {
   const { sideBarOpen } = useSelector((state) => state.toggle);
+  const { totalCoins } = useSelector((state) => state.dashboardReducer);
   return (
     <>
       <aside
@@ -26,11 +27,15 @@ export default function SideBar() {
           <ul className='space-y-2'>
             <SidebarLink
               name='Dashboard'
-              count='12'
               icon={<RiDashboardLine />}
               to='/admin/dashboard'
             />
-            <SidebarLink name='Coins' icon={<RiCoinLine />} to='/admin/coins' />
+            <SidebarLink
+              name='Coins'
+              count={totalCoins}
+              icon={<RiCoinLine />}
+              to='/admin/coins'
+            />
             <SidebarLink
               name='Compositions'
               icon={<RiBrush3Line />}

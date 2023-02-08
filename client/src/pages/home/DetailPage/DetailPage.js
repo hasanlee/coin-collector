@@ -1,25 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Layout/Header";
 import { Avatar } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   coinFavorite,
   coinLike,
+  checkFavorited,
+  checkLiked,
   coinView,
 } from "../../../redux/stores/UserActionsSlice";
 import UserActions from "../../../components/UserActions/UserActions";
 import { getCoinById } from "../../../redux/stores/CoinSlice";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import { NavLink, useParams } from "react-router-dom";
 import NotFound from "../../../components/Errors/NotFound";
 import SimilarCoinsList from "../../../components/SimilarCoins/SimilarCoinsList";
 import { FaArrowLeft, FaCartPlus } from "react-icons/fa";
 import { addToCart } from "../../../redux/stores/CartSlice";
+import { current } from "@reduxjs/toolkit";
 
 export default function DetailPage() {
   const { id } = useParams();
   const { coin, loading, error } = useSelector((state) => state.coinReducer);
+  const { liked, favorited } = useSelector((state) => state.userActionsReducer);
   const {
     coinId,
     coinName,
@@ -43,7 +45,24 @@ export default function DetailPage() {
     likeCount,
     favoriteCount,
   } = coin;
+
   const dispatch = useDispatch();
+  // const [coinLiked, setCoinLiked] = useState(0);
+  // const [coinFavorited, setCoinFavorited] = useState(0);
+  // const [likes, setLikes] = useState(0);
+  // const [favorites, setFavorites] = useState(0);
+
+  const checkUserActionStatus = (cId) => {
+    dispatch(checkFavorited(cId));
+    dispatch(checkLiked(cId));
+  };
+
+  const likeCoin = () => {
+    dispatch(coinLike(id));
+  };
+  const favoriteCoin = () => {
+    dispatch(coinFavorite(id));
+  };
 
   const addCart = () => {
     dispatch(addToCart(coin));
@@ -52,6 +71,7 @@ export default function DetailPage() {
   useEffect(() => {
     dispatch(coinView(id));
     dispatch(getCoinById(id));
+    checkUserActionStatus(id);
   }, [id]);
   return (
     <>
@@ -95,6 +115,10 @@ export default function DetailPage() {
                   view_count={viewCount}
                   favorite_count={favoriteCount}
                   like_count={likeCount}
+                  likeCoin={likeCoin}
+                  favoriteCoin={favoriteCoin}
+                  liked={liked}
+                  favorited={favorited}
                 />
               </div>
               <div className='lg:col-span-3 md:col-span-1 sm:col-span-1 flex flex-col justify-between gap-5'>
@@ -126,6 +150,9 @@ export default function DetailPage() {
                     <strong className='border-b dark:border-gray-600'>
                       Weight :
                     </strong>
+                    <strong className='border-b dark:border-gray-600'>
+                      Price :
+                    </strong>
                   </div>
                   <div className='flex flex-col'>
                     <p className='border-b dark:border-gray-600'>
@@ -140,6 +167,7 @@ export default function DetailPage() {
                     </p>
                     <p className='border-b dark:border-gray-600'>{year}</p>
                     <p className='border-b dark:border-gray-600'>{weight}</p>
+                    <p className='border-b dark:border-gray-600'>{price} $</p>
                   </div>
                 </div>
               </div>

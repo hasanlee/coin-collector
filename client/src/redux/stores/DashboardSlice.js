@@ -8,6 +8,7 @@ const initialState = {
   totalFavorites: 0,
   totalCoinViews: 0,
   totalCoins: 0,
+  categoryViewsStatistics: [],
 };
 
 export const getTotalLikes = createAsyncThunk(
@@ -43,6 +44,18 @@ export const getTotalViews = createAsyncThunk(
     }
   }
 );
+export const getCategoryStatistics = createAsyncThunk(
+  "getCategoryStatistics",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/admin/statistics/categoryviews");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const getTotalCoins = createAsyncThunk(
   "getTotalCoins",
   async (_, { rejectWithValue }) => {
@@ -125,6 +138,23 @@ const dashboardReducer = createSlice({
     builder.addCase(getTotalCoins.rejected, (state, action) => {
       state.loading = false;
       state.totalCoins = 0;
+      state.error = action.payload;
+    });
+    //#endregion
+    //#region getCategoryStatistics
+    builder.addCase(getCategoryStatistics.pending, (state, action) => {
+      state.loading = true;
+      state.categoryViewsStatistics = [];
+      state.error = null;
+    });
+    builder.addCase(getCategoryStatistics.fulfilled, (state, action) => {
+      state.categoryViewsStatistics = action.payload;
+      state.loading = false;
+      state.error = null;
+    });
+    builder.addCase(getCategoryStatistics.rejected, (state, action) => {
+      state.loading = false;
+      state.categoryViewsStatistics = [];
       state.error = action.payload;
     });
     //#endregion

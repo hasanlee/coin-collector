@@ -445,6 +445,19 @@ const totalCoins = trycatch(async (req, res, next) => {
       throw new Error(err);
     });
 });
+const getCategoryViewsStatistics = trycatch(async (req, res, next) => {
+  await (
+    await connection
+  )
+    .query("SELECT * FROM CategoryViewsStatistics")
+    .then(([rows]) => {
+      return res.status(200).json(rows);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+});
+
 module.exports = {
   getAllCoins,
   getAllCoinsView,
@@ -474,4 +487,5 @@ module.exports = {
   getSimilarCoins,
   totalCoinViews,
   totalCoins,
+  getCategoryViewsStatistics,
 };

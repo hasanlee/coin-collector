@@ -18,6 +18,7 @@ const {
   deleteType,
   totalCoinViews,
   totalCoins,
+  getCategoryViewsStatistics,
 } = require("../controllers/coin");
 const { totalFavorites } = require("../controllers/favorites");
 const { totalLikes } = require("../controllers/like_coin");
@@ -101,6 +102,9 @@ adminRoutes.get("/total/likes", (req, res, next) => {
 });
 adminRoutes.get("/total/coins", (req, res, next) => {
   totalCoins(req, res, next);
+});
+adminRoutes.get("/statistics/categoryviews", (req, res, next) => {
+  getCategoryViewsStatistics(req, res, next);
 });
 //#endregion
 
