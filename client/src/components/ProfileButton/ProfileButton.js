@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 import { removeTokenAndCookie } from "../../redux/stores/AuthSlice";
 import { useTranslation } from "react-i18next";
+import LanguageSelector from "../../components/LanguageSelector/LanguageSelector";
 
 export default function ProfileButton() {
   const { t, i18n } = useTranslation();
@@ -76,6 +77,9 @@ export default function ProfileButton() {
                 >
                   {t("usermenu_signout")}
                 </button>
+              </li>
+              <li>
+                <LanguageSelector />
               </li>
             </ul>
           </div>

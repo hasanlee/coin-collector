@@ -7,6 +7,7 @@ import ProfileButton from "../../../../components/ProfileButton/ProfileButton";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../../../redux/stores/ToggleSlice";
 import { useTranslation } from "react-i18next";
+import LanguageSelector from "../../../../components/LanguageSelector/LanguageSelector";
 
 export default function NavBar() {
   const { t, i18n } = useTranslation();

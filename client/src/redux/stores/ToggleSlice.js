@@ -7,6 +7,9 @@ const initialState = {
   modalState: false,
   sideBarOpen: true,
   cartDrawerOpen: false,
+  langChanger: false,
+  langList: ["AZ", "TR", "EN", "RU"],
+  lang: localStorage.getItem("lang") || "US",
 };
 
 const hideAlert = (alerts, id) => {
@@ -37,6 +40,13 @@ const toggle = createSlice({
     toggleCart: (state) => {
       state.cartDrawerOpen = !state.cartDrawerOpen;
     },
+    toggleLangChanger: (state) => {
+      state.langChanger = !state.langChanger;
+    },
+    toggleLang: (state, action) => {
+      state.lang = action.payload;
+      localStorage.setItem("lang", action.payload);
+    },
   },
   extraReducers: {},
 });
@@ -48,5 +58,7 @@ export const {
   showAlert,
   toggleSidebar,
   toggleCart,
+  toggleLangChanger,
+  toggleLang,
 } = toggle.actions;
 export default toggle.reducer;

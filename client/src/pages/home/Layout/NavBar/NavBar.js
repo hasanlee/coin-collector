@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaCartPlus } from "react-icons/fa";
 import { toggleCart } from "../../../../redux/stores/ToggleSlice";
 import { useTranslation } from "react-i18next";
+import LanguageSelector from "../../../../components/LanguageSelector/LanguageSelector";
 
 export default function NavBar() {
   const { authToken } = useSelector((state) => state.authReducer);
@@ -29,7 +30,6 @@ export default function NavBar() {
             </span>
           </a>
           <div className='flex md:order-2 gap-2'>
-            {authToken ? <ProfileButton /> : <AuthButtons />}
             <button
               onClick={() => {
                 dispatch(toggleCart(!cartDrawerOpen));
@@ -42,6 +42,7 @@ export default function NavBar() {
                 {cart.length}
               </div>
             </button>
+            {authToken ? <ProfileButton /> : <AuthButtons />}
             <DarkModeSwitcher />
             <button
               data-collapse-toggle='navbar-cta'
