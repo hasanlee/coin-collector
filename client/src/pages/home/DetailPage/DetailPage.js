@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Header from "../Layout/Header";
 import { Avatar } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ import NotFound from "../../../components/Errors/NotFound";
 import SimilarCoinsList from "../../../components/SimilarCoins/SimilarCoinsList";
 import { FaArrowLeft, FaCartPlus } from "react-icons/fa";
 import { addToCart } from "../../../redux/stores/CartSlice";
-import { current } from "@reduxjs/toolkit";
+import { useTranslation } from "react-i18next";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -45,12 +45,8 @@ export default function DetailPage() {
     likeCount,
     favoriteCount,
   } = coin;
-
+  const { t, i18n } = useTranslation(["translation", "content"]);
   const dispatch = useDispatch();
-  // const [coinLiked, setCoinLiked] = useState(0);
-  // const [coinFavorited, setCoinFavorited] = useState(0);
-  // const [likes, setLikes] = useState(0);
-  // const [favorites, setFavorites] = useState(0);
 
   const checkUserActionStatus = (cId) => {
     dispatch(checkFavorited(cId));
@@ -94,7 +90,8 @@ export default function DetailPage() {
                 onClick={addCart}
                 className='flex items-center gap-1 text-gray-900 dark:text-white font-bold'
               >
-                <FaCartPlus size={24} className='dark:text-white' /> Add to cart
+                <FaCartPlus size={24} className='dark:text-white' />{" "}
+                {t("add_to_cart")}
               </button>
             </div>
             <div className='grid lg:grid-cols-4 gap-5 md:grid-cols-1 sm:grid-cols-1'>
@@ -133,25 +130,25 @@ export default function DetailPage() {
                 <div className='grid grid-cols-2 text-gray-700 dark:text-gray-400 p-4 border rounded-t dark:border-gray-600'>
                   <div className='flex flex-col'>
                     <strong className='border-b dark:border-gray-600 '>
-                      Issuing Country :
+                      {t("Issuing Country", { ns: "content" })} :
                     </strong>
                     <strong className='border-b dark:border-gray-600'>
-                      Composition :
+                      {t("Composition", { ns: "content" })} :
                     </strong>
                     <strong className='border-b dark:border-gray-600'>
-                      Quality :
+                      {t("Quality", { ns: "content" })} :
                     </strong>
                     <strong className='border-b dark:border-gray-600'>
-                      Denomination :
+                      {t("Denomination", { ns: "content" })} :
                     </strong>
                     <strong className='border-b dark:border-gray-600'>
-                      Year :
+                      {t("Year", { ns: "content" })} :
                     </strong>
                     <strong className='border-b dark:border-gray-600'>
-                      Weight :
+                      {t("Weight", { ns: "content" })} :
                     </strong>
                     <strong className='border-b dark:border-gray-600'>
-                      Price :
+                      {t("Price", { ns: "content" })} :
                     </strong>
                   </div>
                   <div className='flex flex-col'>

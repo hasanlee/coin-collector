@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 import { removeTokenAndCookie } from "../../redux/stores/AuthSlice";
+import { useTranslation } from "react-i18next";
+
 export default function ProfileButton() {
+  const { t, i18n } = useTranslation();
   const { authToken } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const user = { ...authToken };
@@ -54,7 +57,7 @@ export default function ProfileButton() {
                     className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
                     to='/admin/dashboard'
                   >
-                    Admin Dashboard
+                    {t("usermenu_dashboard")}
                   </NavLink>
                 </li>
               ) : null}
@@ -63,7 +66,7 @@ export default function ProfileButton() {
                   className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
                   to='/profile'
                 >
-                  Profile
+                  {t("usermenu_profile")}
                 </NavLink>
               </li>
               <li>
@@ -71,7 +74,7 @@ export default function ProfileButton() {
                   className='block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
                   onClick={handleSignOut}
                 >
-                  Sign out
+                  {t("usermenu_signout")}
                 </button>
               </li>
             </ul>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import CustomAlert from "../../../components/Alert/CustomAlert";
 import { signUp } from "../../../redux/stores/AuthSlice";
+import { useTranslation } from "react-i18next";
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ export default function SignUp() {
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { t, i18n } = useTranslation();
   const registerHandler = async (e) => {
     e.preventDefault();
     const formData = {
@@ -37,13 +38,13 @@ export default function SignUp() {
             </NavLink>
             <NavLink to='/login'>
               <span className='text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                Sign In
+                {t("sign_in")}
               </span>
             </NavLink>
           </div>
           <form className='space-y-6' onSubmit={registerHandler}>
             <h5 className='text-xl font-medium text-gray-900 dark:text-white'>
-              Sign up to our platform
+              {t("login_sign_up_message")}
             </h5>
             {error ? (
               <CustomAlert
@@ -57,7 +58,7 @@ export default function SignUp() {
                 htmlFor='username'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Username
+                {t("login_username")}
               </label>
               <input
                 type='text'
@@ -77,7 +78,7 @@ export default function SignUp() {
                 htmlFor='email'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Your email
+                {t("login_email")}
               </label>
               <input
                 type='email'
@@ -96,7 +97,7 @@ export default function SignUp() {
                 htmlFor='password'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Your password
+                {t("login_password")}
               </label>
               <input
                 type='password'
@@ -114,7 +115,7 @@ export default function SignUp() {
               type='submit'
               className='w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
-              Complete registration
+              {t("complete_registration_button")}
             </button>
           </form>
         </div>

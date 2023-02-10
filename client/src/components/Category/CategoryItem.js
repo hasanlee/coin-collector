@@ -1,6 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 export default function CategoryItem({ id, name, description, icon }) {
+  const { t, i18n } = useTranslation();
   return (
     <div>
       <div className='max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
@@ -24,7 +27,7 @@ export default function CategoryItem({ id, name, description, icon }) {
             to={"/coins/" + name}
             className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
           >
-            Show all
+            {t("show_all")}
             <svg
               aria-hidden='true'
               className='w-4 h-4 ml-2 -mr-1'

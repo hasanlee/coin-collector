@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function SelectBox({
   label,
@@ -10,6 +11,7 @@ export default function SelectBox({
   valueData,
   displayData,
 }) {
+  const { t, i18n } = useTranslation(["translation", "content"]);
   const [selectValue, setSelectValue] = useState(value);
   useEffect(() => {
     setSelectValue(value);
@@ -20,7 +22,7 @@ export default function SelectBox({
         htmlFor={id}
         className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
       >
-        {label}
+        {t(label, { ns: "content" })}
       </label>
       <select
         {...register}

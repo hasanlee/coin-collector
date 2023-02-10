@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ListGroup, Badge } from "flowbite-react";
 import { FaHeart, FaStar, FaEye } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export default function UserActions({
   view_count,
@@ -11,6 +12,7 @@ export default function UserActions({
   liked,
   favorited,
 }) {
+  const { t, i18n } = useTranslation();
   const [coinLiked, setCoinLiked] = useState(liked);
   const [coinFavorited, setCoinFavorited] = useState(favorited);
   useEffect(() => {
@@ -26,7 +28,9 @@ export default function UserActions({
               <Badge>
                 <FaEye />
               </Badge>
-              <p>Views : {view_count || 0}</p>
+              <p>
+                {t("views")} : {view_count || 0}
+              </p>
             </span>
           </ListGroup.Item>
           <ListGroup.Item disabled={coinFavorited} onClick={favoriteCoin}>
@@ -35,7 +39,7 @@ export default function UserActions({
                 <FaStar />
               </Badge>
               <p>
-                {coinFavorited ? "Favorited" : "Add Favorite"} :{" "}
+                {coinFavorited ? t("favorited") : t("add_favorite")} :{" "}
                 {favorite_count || 0}
               </p>
             </span>
@@ -46,7 +50,7 @@ export default function UserActions({
                 <FaHeart />
               </Badge>
               <p>
-                {coinLiked ? "Liked" : "Like Coin"} : {like_count || 0}
+                {coinLiked ? t("liked") : t("like")} : {like_count || 0}
               </p>
             </span>
           </ListGroup.Item>

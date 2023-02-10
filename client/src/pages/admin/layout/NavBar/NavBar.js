@@ -6,8 +6,10 @@ import { Tooltip } from "flowbite-react";
 import ProfileButton from "../../../../components/ProfileButton/ProfileButton";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../../../redux/stores/ToggleSlice";
+import { useTranslation } from "react-i18next";
 
 export default function NavBar() {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const toggleSidebarClick = () => {
     dispatch(toggleSidebar());
@@ -48,7 +50,7 @@ export default function NavBar() {
                       <FaHome className='dark:text-white' />
                     </NavLink>
                   </Tooltip>{" "}
-                  Admin Panel
+                  {t("admin_brand_name")}
                 </span>
               </div>
             </div>

@@ -6,8 +6,10 @@ import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
 import { Avatar, Spinner } from "flowbite-react";
 import Dialog from "../../../components/Dialog/Dialog";
 import CustomToast from "../../../components/Toast/CustomToast";
+import { useTranslation } from "react-i18next";
 
 export default function CoinList() {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const { coins, loading, error, serverResponse } = useSelector(
     (state) => state.coinReducer
@@ -48,7 +50,7 @@ export default function CoinList() {
         <div className='flex justify-between'>
           <div className='pb-4 bg-white dark:bg-gray-900'>
             <label htmlFor='table-search' className='sr-only'>
-              Search
+              {t("search")}
             </label>
             <div className='relative mt-1'>
               <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
@@ -70,7 +72,7 @@ export default function CoinList() {
                 type='text'
                 id='table-search'
                 className='block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                placeholder='Search for coins'
+                placeholder={t("search_for")}
                 onChange={(e) => {
                   searchOnTable(e.target.value);
                 }}
@@ -89,7 +91,7 @@ export default function CoinList() {
               className='inline-flex gap-3 items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
             >
               <FaPlus className='text-green-400' />
-              Add new
+              {t("admin_add_new")}
             </NavLink>
           </div>
         </div>
@@ -97,22 +99,22 @@ export default function CoinList() {
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
-                Images
+                {t("Images")}
               </th>
               <th scope='col' className='px-6 py-3'>
-                Coin name
+                {t("Coin name")}
               </th>
               <th scope='col' className='px-6 py-3'>
-                Short Desc.
+                {t("Short Desc.")}
               </th>
               <th scope='col' className='px-6 py-3'>
-                Issued Country
+                {t("Issued Country")}
               </th>
               <th scope='col' className='px-6 py-3'>
-                Year
+                {t("Year")}
               </th>
               <th scope='col' className='px-6 py-3'>
-                Action
+                {t("admin_tablecol_actions")}
               </th>
             </tr>
           </thead>
@@ -180,14 +182,14 @@ export default function CoinList() {
       </div>
       <Dialog
         show={showDialog}
-        message={`Are you sure delete ` + coin.coinName + " ?"}
+        message={t("delete_confirmation_message", { name: coin.coinName })}
         okBtnType='failure'
-        okText='Yes, delete'
-        noText='No, cancel'
+        okText={t("delete_confirm")}
+        noText={t("delete_cancel")}
+        okClick={submitDelete}
         noClick={() => {
           setShowDialog(false);
         }}
-        okClick={submitDelete}
       />
     </>
   );

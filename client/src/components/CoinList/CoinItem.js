@@ -8,6 +8,8 @@ import { toggleModal } from "../../redux/stores/ToggleSlice";
 import { addToCart } from "../../redux/stores/CartSlice";
 import { NavLink } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+
 export default function CoinItem({ coin }) {
   const {
     coinId,
@@ -40,6 +42,7 @@ export default function CoinItem({ coin }) {
   const addCart = () => {
     dispatch(addToCart(coin));
   };
+  const { t, i18n } = useTranslation();
   return (
     <>
       <div className='max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
@@ -104,7 +107,7 @@ export default function CoinItem({ coin }) {
                 to={"/coin/" + coinId}
                 className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
               >
-                View details
+                {t("view_details")}
               </NavLink>
               <button
                 onClick={addCart}

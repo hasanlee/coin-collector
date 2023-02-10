@@ -10,8 +10,10 @@ import {
   getAllCompositions,
   getAllQualities,
 } from "../../redux/stores/CoinSlice";
+import { useTranslation } from "react-i18next";
 
 export default function SearchBar() {
+  const { t, i18n } = useTranslation();
   const [searchText, setSearchText] = useState("?s=");
   const [showModal, setShowModal] = useState(false);
   const { types, countries, qualities } = useSelector(
@@ -58,7 +60,7 @@ export default function SearchBar() {
             htmlFor='default-search'
             className='mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white'
           >
-            Search
+            {t("search")}
           </label>
           <div className='relative'>
             <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
@@ -98,7 +100,7 @@ export default function SearchBar() {
                   " text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 }
               >
-                Search
+                {t("search")}
               </button>
               {pathname.includes("coins") ? (
                 <button
@@ -131,14 +133,14 @@ export default function SearchBar() {
           setShowModal(false);
         }}
       >
-        <Modal.Header>Advanced Search</Modal.Header>
+        <Modal.Header>{t("advanced_search")}</Modal.Header>
         <Modal.Body>
           <form onSubmit={advancedSearchHandler}>
             <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-2'>
               <div className='col-span-2'>
                 <div className='mb-6'>
                   <SelectBox
-                    label='Issuing Country'
+                    label='Issuing country'
                     name='country'
                     id='country'
                     options={countries}
@@ -156,7 +158,7 @@ export default function SearchBar() {
                 </div>
                 <div className='mb-6'>
                   <SelectBox
-                    label='Quality of the coin'
+                    label='Quality of coin'
                     name='quality'
                     id='quality'
                     options={qualities}
@@ -213,7 +215,7 @@ export default function SearchBar() {
                 type='submit'
                 className='inline-flex gap-3 items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
               >
-                Search
+                {t("search")}
               </button>
             </div>
           </form>

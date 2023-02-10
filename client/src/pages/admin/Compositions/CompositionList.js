@@ -14,8 +14,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputValidationError from "../../../components/Input/InputValidationError";
 import { compostionSchema } from "../../../utils/ValidationSchemas";
+import { useTranslation } from "react-i18next";
 
 export default function CompositionList() {
+  const { t, i18n } = useTranslation(["translation", "content"]);
   const dispatch = useDispatch();
   const { compositions, loading, error, serverResponse } = useSelector(
     (state) => state.coinReducer
@@ -88,7 +90,7 @@ export default function CompositionList() {
         <div className='flex justify-between'>
           <div className='pb-4 bg-white dark:bg-gray-900'>
             <label htmlFor='table-search' className='sr-only'>
-              Search
+              {t("search")}
             </label>
             <div className='relative mt-1'>
               <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
@@ -110,7 +112,7 @@ export default function CompositionList() {
                 type='text'
                 id='table-search'
                 className='block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                placeholder='Search for coins'
+                placeholder={t("search_for")}
                 onChange={(e) => {
                   searchOnTable(e.target.value);
                 }}
@@ -129,7 +131,7 @@ export default function CompositionList() {
               className='inline-flex gap-3 items-center p-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'
             >
               <FaPlus className='text-green-400' />
-              Add new
+              {t("admin_add_new")}
             </button>
           </div>
         </div>
@@ -137,13 +139,13 @@ export default function CompositionList() {
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
-                Name
+                {t("Name", { ns: "content" })}
               </th>
               <th scope='col' className='px-6 py-3'>
-                Icon
+                {t("Icon", { ns: "content" })}
               </th>
               <th scope='col' className='px-6 py-3'>
-                Action
+                {t("admin_tablecol_actions")}
               </th>
             </tr>
           </thead>
@@ -199,7 +201,9 @@ export default function CompositionList() {
         }}
       >
         <Modal.Header>
-          {mode === "EDIT" ? "Edit : " + composition.name : "Add new"}
+          {mode === "EDIT"
+            ? t("admin_modal_head_edit") + " : " + composition.name
+            : t("admin_modal_head_add")}
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(submitHandler)}>
@@ -234,7 +238,7 @@ export default function CompositionList() {
 
             <div className='flex justify-end mx-3'>
               <button className='inline-flex gap-3 items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white'>
-                Save
+                {t("save")}
               </button>
             </div>
           </form>
@@ -242,10 +246,10 @@ export default function CompositionList() {
       </Modal>
       <Dialog
         show={showDialog}
-        message={"Are you sure delete " + composition.name + " ?"}
+        message={t("delete_confirmation_message", { name: composition.name })}
         okBtnType='failure'
-        okText='Yes, delete'
-        noText='No, cancel'
+        okText={t("delete_confirm")}
+        noText={t("delete_cancel")}
         okClick={submitDelete}
         noClick={() => {
           setShowDialog(false);

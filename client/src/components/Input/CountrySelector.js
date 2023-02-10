@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Flag from "react-world-flags";
 import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useTranslation } from "react-i18next";
 
 export default function CountrySelector({
   label,
@@ -12,7 +13,7 @@ export default function CountrySelector({
   value = { name: "Azerbaijan", code: "AZ" },
 }) {
   const [selected, setSelected] = useState(value);
-
+  const { t, i18n } = useTranslation(["translation", "content"]);
   const onChangeHandler = (e) => {
     const selectedCountury = [...countries].filter(({ code }) => code === e);
     setSelected(selectedCountury[0]);
@@ -26,7 +27,7 @@ export default function CountrySelector({
         htmlFor={id}
         className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
       >
-        {label}
+        {t(label, { ns: "content" })}
       </label>
       <Listbox name={name} value={selected.code} onChange={onChangeHandler}>
         <div className='relative mt-1'>

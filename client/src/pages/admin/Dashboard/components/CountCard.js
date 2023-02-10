@@ -1,7 +1,10 @@
 import React from "react";
 import { FaDashcube } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+
 export default function CountCard({ icon, title, count, color = "blue" }) {
   const colorClass = `text-${color}-500 dark:text-${color}-200 bg-${color}-100 dark:bg-${color}-500`;
+  const { t, i18n } = useTranslation(["translation", "content"]);
   return (
     <div className='w-full rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800'>
       <div className='p-4 flex items-center '>
@@ -10,7 +13,7 @@ export default function CountCard({ icon, title, count, color = "blue" }) {
         </div>
         <div>
           <p className='mb-2 text-sm font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap'>
-            {title || "Count"}
+            {t(title, { ns: "content" }) || "Count"}
           </p>
           <p className='text-lg font-semibold text-gray-700 dark:text-gray-200  whitespace-nowrap'>
             {count || "0"}

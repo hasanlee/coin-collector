@@ -3,6 +3,7 @@ import AvatarGroup from "flowbite-react/lib/esm/components/Avatar/AvatarGroup";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Flag from "react-world-flags";
+import { useTranslation } from "react-i18next";
 
 export default function SimilarCoinsItem({
   id,
@@ -12,6 +13,7 @@ export default function SimilarCoinsItem({
   imageUrl_front,
   imageUrl_back,
 }) {
+  const { t, i18n } = useTranslation();
   return (
     <div className='flex items-center space-x-4 justify-between pr-5'>
       <div className='flex items-center space-x-4'>
@@ -36,7 +38,7 @@ export default function SimilarCoinsItem({
         </div>
       </div>
       <NavLink to={"/coin/" + id} className=''>
-        View
+        {t("view")}
       </NavLink>
     </div>
   );

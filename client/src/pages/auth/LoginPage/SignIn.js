@@ -7,6 +7,7 @@ import CustomAlert from "../../../components/Alert/CustomAlert";
 import { Spinner } from "flowbite-react";
 import Cookies from "js-cookie";
 import { useJwt } from "react-jwt";
+import { useTranslation } from "react-i18next";
 
 export default function SignIn() {
   const [username, setUsername] = useState("");
@@ -17,6 +18,7 @@ export default function SignIn() {
   const { decodedToken } = useJwt(Cookies.get("access_token"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
   const loginHandler = async (e) => {
     e.preventDefault();
     const formData = {
@@ -41,13 +43,13 @@ export default function SignIn() {
             </NavLink>
             <NavLink to='/register'>
               <span className='text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                Sign Up
+                {t("sign_up")}
               </span>
             </NavLink>
           </div>
           <form className='space-y-6' onSubmit={loginHandler}>
             <h5 className='text-xl font-medium text-gray-900 dark:text-white'>
-              Sign in to our platform
+              {t("login_sign_in_message")}
             </h5>
             {error ? (
               <CustomAlert
@@ -61,7 +63,7 @@ export default function SignIn() {
                 htmlFor='username'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Username
+                {t("login_username")}
               </label>
               <input
                 type='text'
@@ -80,7 +82,7 @@ export default function SignIn() {
                 htmlFor='password'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Your password
+                {t("login_password")}
               </label>
               <input
                 type='password'
@@ -101,7 +103,7 @@ export default function SignIn() {
               {loading ? (
                 <Spinner size='sm' light={true} className='mr-3' />
               ) : null}
-              Login to your account
+              {t("login_button")}
             </button>
           </form>
         </div>

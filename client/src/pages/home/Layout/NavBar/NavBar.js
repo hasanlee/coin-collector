@@ -6,12 +6,14 @@ import ProfileButton from "../../../../components/ProfileButton/ProfileButton";
 import { useDispatch, useSelector } from "react-redux";
 import { FaCartPlus } from "react-icons/fa";
 import { toggleCart } from "../../../../redux/stores/ToggleSlice";
+import { useTranslation } from "react-i18next";
 
 export default function NavBar() {
   const { authToken } = useSelector((state) => state.authReducer);
   const { cartDrawerOpen } = useSelector((state) => state.toggle);
   const { cart } = useSelector((state) => state.cartReducer);
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
   return (
     <>
       <nav className='bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900'>
@@ -23,7 +25,7 @@ export default function NavBar() {
               alt='Flowbite Logo'
             />
             <span className='self-center text-xl font-semibold whitespace-nowrap dark:text-white'>
-              Coin Collector
+              {t("site_name")}
             </span>
           </a>
           <div className='flex md:order-2 gap-2'>

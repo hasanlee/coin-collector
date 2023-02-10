@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function InputFile({
   label,
@@ -8,6 +9,7 @@ export default function InputFile({
   imgHolder,
   register,
 }) {
+  const { t, i18n } = useTranslation(["translation", "content"]);
   const [picture, setPicture] = useState(null);
   const onChangePicture = (e) => {
     setPicture(URL.createObjectURL(e.target.files[0]));
@@ -46,10 +48,10 @@ export default function InputFile({
               </svg>
             )}
             <p className='mb-2 text-sm text-gray-500 dark:text-gray-400'>
-              {label}
+              {t(label)}
             </p>
             <p className='text-xs text-gray-500 dark:text-gray-400'>
-              {placeholder}
+              {t(placeholder, { ns: "content" })}
             </p>
           </div>
           <input

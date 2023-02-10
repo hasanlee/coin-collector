@@ -5,6 +5,7 @@ import { toggleCart } from "../../redux/stores/ToggleSlice";
 import { removeFromCart } from "../../redux/stores/CartSlice";
 import { Avatar } from "flowbite-react";
 import { FaTrash } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export default function CartDrawer() {
   const { cartDrawerOpen } = useSelector((state) => state.toggle);
@@ -13,6 +14,7 @@ export default function CartDrawer() {
   const removeCart = (id) => {
     dispatch(removeFromCart(id));
   };
+  const { t, i18n } = useTranslation();
   return (
     <>
       {cartDrawerOpen ? (
@@ -24,7 +26,7 @@ export default function CartDrawer() {
           tabIndex='-1'
         >
           <h5 className='inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400'>
-            Cart
+            {t("cart")}
           </h5>
           <button
             onClick={() => {
@@ -76,7 +78,7 @@ export default function CartDrawer() {
                           {item.coinName}
                         </p>
                         <p className='text-sm text-gray-500 truncate dark:text-gray-400'>
-                          Quantity : {item.quantity}
+                          {t("cart_quantity")} : {item.quantity}
                         </p>
                       </div>
                       <div className='inline-flex items-center text-base font-semibold text-gray-900 dark:text-white'>
@@ -88,7 +90,7 @@ export default function CartDrawer() {
               })}
             </ul>
             <div className='text-black dark:text-white font-bold'>
-              Total :{" "}
+              {t("cart_total")} :{" "}
               {cart.length > 0
                 ? cart.reduce(
                     (accumulator, currentValue) =>
@@ -107,7 +109,7 @@ export default function CartDrawer() {
                 to='/'
                 className='inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
               >
-                Checkout{" "}
+                {t("cart_checkout")}{" "}
                 <svg
                   className='w-4 h-4 ml-2'
                   aria-hidden='true'

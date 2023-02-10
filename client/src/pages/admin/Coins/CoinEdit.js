@@ -6,6 +6,7 @@ import TextArea from "../../../components/Input/TextArea";
 import { FaDollarSign } from "react-icons/fa";
 import CountrySelector from "../../../components/Input/CountrySelector";
 import OverlayLoading from "../../../components/LoadingSpinner/OverlayLoading";
+import { useTranslation } from "react-i18next";
 import {
   getAllCountries,
   getAllCoinTypes,
@@ -19,6 +20,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import CustomToast from "../../../components/Toast/CustomToast";
 
 export default function CoinEdit() {
+  const { t, i18n } = useTranslation();
   const {
     types,
     compositions,
@@ -211,13 +213,13 @@ export default function CoinEdit() {
               to='/admin/coins'
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
-              Back
+              {t("go_back")}
             </NavLink>
             <button
               type='submit'
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
-              Save changes
+              {t("save")}
             </button>
           </div>
         </div>

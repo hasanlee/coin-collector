@@ -1,11 +1,15 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
+import { useTranslation } from "react-i18next";
 
 export default function CustomPagination({ pageCount, handlePageChange }) {
+  const { t, i18n } = useTranslation();
   return (
     <div className='flex justify-center'>
       {pageCount === 0 ? (
-        <h6 className='text-lg font-bold dark:text-white'>No items found...</h6>
+        <h6 className='text-lg font-bold dark:text-white'>
+          {t("not_item_found")}
+        </h6>
       ) : (
         <ReactPaginate
           pageCount={pageCount}
