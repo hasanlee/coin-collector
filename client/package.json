@@ -1,4 +1,5 @@
 {
+  "homepage": "https://hasanlee.github.io/coin-collector/client",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -42,7 +43,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tailwatch": "npx tailwindcss -i ./src/index.css -o ./dist/style.css --watch"
+    "tailwatch": "npx tailwindcss -i ./src/index.css -o ./dist/style.css --watch",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build" 
   },
   "eslintConfig": {
     "extends": [
@@ -63,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "tailwind-scrollbar": "^2.1.0",
     "tailwindcss": "^3.2.4"
   }
