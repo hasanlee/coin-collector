@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/coin-collector/static/css/main.4fc0c23b.css",
-    "main.js": "/coin-collector/static/js/main.c41f78e6.js",
-    "index.html": "/coin-collector/index.html",
-    "static/media/getFetch.cjs": "/coin-collector/static/media/getFetch.40f37ddea2378391108f.cjs",
-    "main.4fc0c23b.css.map": "/coin-collector/static/css/main.4fc0c23b.css.map",
-    "main.c41f78e6.js.map": "/coin-collector/static/js/main.c41f78e6.js.map"
+    "main.css": "/coin-collector/client/static/css/main.4fc0c23b.css",
+    "main.js": "/coin-collector/client/static/js/main.4e39c7cd.js",
+    "index.html": "/coin-collector/client/index.html",
+    "static/media/getFetch.cjs": "/coin-collector/client/static/media/getFetch.40f37ddea2378391108f.cjs",
+    "main.4fc0c23b.css.map": "/coin-collector/client/static/css/main.4fc0c23b.css.map",
+    "main.4e39c7cd.js.map": "/coin-collector/client/static/js/main.4e39c7cd.js.map"
   },
   "entrypoints": [
     "static/css/main.4fc0c23b.css",
-    "static/js/main.c41f78e6.js"
+    "static/js/main.4e39c7cd.js"
   ]
 }
